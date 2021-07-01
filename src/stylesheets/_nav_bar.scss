@@ -1,0 +1,22 @@
+@import "colors";
+
+nav {
+  margin-top: 10px;
+  
+  .nav-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  
+    & .nav-link {    
+      a {
+        padding: 10px;
+        text-decoration: none;
+  
+        &:hover {
+          background-color: #cccccc;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+html {
+  box-sizing: border-box;
+  font-size: 16px; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal; }
+
+ol, ul {
+  list-style: none; }
+
+img {
+  max-width: 100%;
+  height: auto; }
+
+nav {
+  margin-top: 10px; }
+  nav .nav-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; }
+    nav .nav-links .nav-link a {
+      padding: 10px;
+      text-decoration: none; }
+      nav .nav-links .nav-link a:hover {
+        background-color: #cccccc; }
+
+.data-vis {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0px 50px;
+  margin-top: 10px;
+  height: 90vh;
+  width: 100vw;
+  background-color: #eeeeee; }
+  .data-vis .tooltip {
+    font-size: 20px;
+    font-family: sans-serif; }
+  .data-vis .coupon-stacked-tooltip {
+    font-size: 12px;
+    font-family: sans-serif; }
+  .data-vis .data-wrapper {
+    height: 100%;
+    width: 100%; }
+    .data-vis .data-wrapper svg {
+      overflow: visible; }
+  .data-vis .data-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; }
+  .data-vis .data-dropdown {
+    margin-top: 40px; }
+
+#root, body, html {
+  height: 100%;
+  width: 100%; }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+/*# sourceMappingURL=App.css.map */
