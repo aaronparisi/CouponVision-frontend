@@ -18,7 +18,7 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
   const wrapperContentRect = useResizeObserver(wrapperRef)
 
   const [hoverColor, setHoverColor] = useState(null)
-
+  
   useEffect(() => {
     const svg = select(svgRef.current)
     const { width, height } = wrapperContentRect || wrapperRef.current.getBoundingClientRect()
@@ -90,19 +90,20 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
         }
         const brandName = brands.filter(brand => brand.id === brandKey)[0].name
         
-        svg.selectAll(".coupon-stacked-tooltip")
-        .data([val])
-        .join((enter) => {
-          return enter.append("text")
-            .attr("y", yScale(val.data.grocer_name))
-        })
-        .attr("class", "coupon-stacked-tooltip")
-        .text(`${brandName}: ${couponCount}`)
-        .attr("x", xScale(val[0]) + 50)
-        .attr("text-anchor", "middle")
-        .transition()
-        .attr("y", yScale(val.data.grocer_name) - 3)
-        .attr("opacity", 1)
+        svg
+          .selectAll(".coupon-stacked-tooltip")
+          .data([val])
+          .join((enter) => {
+            return enter.append("text")
+              .attr("y", yScale(val.data.grocer_name))
+          })
+          .attr("class", "coupon-stacked-tooltip")
+          .text(`${brandName}: ${couponCount}`)
+          .attr("x", xScale(val[0]) + 50)
+          .attr("text-anchor", "middle")
+          .transition()
+          .attr("y", yScale(val.data.grocer_name) - 3)
+          .attr("opacity", 1)
       })
       .on("mouseleave", (event, val) => {
         const tgt = event.currentTarget  // the 'rect'

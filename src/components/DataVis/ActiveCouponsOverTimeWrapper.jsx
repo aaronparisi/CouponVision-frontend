@@ -10,6 +10,7 @@ import {
 const ActiveCouponsOverTimeWrapper = ({
   grocers,
   curDate,
+  colors,
   getCouponsByBrandPerGrocer
 }) => {
   const minDate = subYears(startOfToday(), 2)
@@ -29,7 +30,7 @@ const ActiveCouponsOverTimeWrapper = ({
     <div className="data-vis">
       <h1>Non-Expired Coupons Over Time</h1>
       <br />
-      <ActiveCouponsOverTime grocers={grocers} minDate={minDate} maxDate={maxDate} curDate={curDate} />
+      <ActiveCouponsOverTime grocers={grocers} minDate={minDate} maxDate={maxDate} curDate={curDate} colors={colors} />
       <div className="data-buttons">
         <DateSliderContainer minDate={minDate} maxDate={maxDate} />
         <button

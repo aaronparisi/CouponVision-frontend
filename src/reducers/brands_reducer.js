@@ -11,7 +11,7 @@ const brandsReducer = (state = _nullBrands, action) => {
 
   switch(action.type) {
     case RECEIVE_COUPON_COUNTS_BY_BRAND_PER_GROCER:
-      return action.data.brands
+      return action.brands
     default:
       return state;
   }

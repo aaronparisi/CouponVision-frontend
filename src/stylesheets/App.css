@@ -81,7 +81,7 @@ nav {
         display: flex;
         flex-direction: row;
         justify-content: stretch;
-        margin-bottom: 1%; }
+        padding: 1%; }
         .counts-by-brand .counts-content .legend .legend-brand .brand-color {
           flex-basis: 10%;
           border: 1px solid black;

@@ -10,9 +10,9 @@ const grocersReducer = (state = _nullGrocers, action) => {
 
   switch(action.type) {
     case RECEIVE_COUPON_COUNTS_BY_BRAND_PER_GROCER:
-      return action.data.grocers
+      return action.grocers
     case RECEIVE_COUPONS_BY_BRAND_PER_GROCER:
-      return action.data.grocers
+      return action.grocers
     default:
       return state;
   }

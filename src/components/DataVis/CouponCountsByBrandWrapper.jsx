@@ -3,15 +3,13 @@ import CouponCountsByBrand from './CouponCountsByBrand'
 import { 
 
 } from "date-fns";
-import { randColors } from '../../helpers/colors.jsx'
 
 const CouponCountsByBrandWrapper = ({
   grocers,
   brands,
+  colors,
   getCouponCounts
-}) => {  
-  const [colors, setColors] = useState({})
-
+}) => {
   const generateNewData = e => {
     e.preventDefault()
 
@@ -22,9 +20,9 @@ const CouponCountsByBrandWrapper = ({
     if (grocers.length === 0) getCouponCounts()
   }, [getCouponCounts])
 
-  useEffect(() => {
-    setColors(randColors(brands.length))
-  }, [brands.length])  // ! this is hacky
+  // useEffect(() => {
+  //   setColors(randColors(brands.length))
+  // }, [brands.length])  // ! this is hacky
   
   return (
     <div className="counts-by-brand" >

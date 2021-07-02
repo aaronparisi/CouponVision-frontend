@@ -13,24 +13,11 @@ import {
 } from 'date-fns'
 
 import useResizeObserver from '../../helpers/useResizeObserver'
-import { randColor } from '../../helpers/colors'
 
-const CouponLineChart = ({ grocers, minDate, maxDate, curDate }) => {
+const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
   const svgRef = useRef()
   const wrapperRef = useRef()
   const wrapperContentRect = useResizeObserver(wrapperRef)
-
-  const [colors, setColors] = useState({})
-
-  useEffect(() => {
-    const colors = {}
-
-    grocers.forEach(grocer => {
-      colors[grocer.name] = randColor()
-    })
-
-    setColors(colors)
-  }, [grocers.length])
   
   useEffect(() => {
     const svg = select(svgRef.current)
@@ -115,7 +102,7 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate }) => {
         return genLine(val.pairs)
       })
       .attr("fill", "none")
-      .attr("stroke", val => colors[val.grocer.name])
+      .attr("stroke", (val, idx) => colors[idx])
       .attr("stroke-width", "2")
       .attr("class", "line")
       .on("mouseenter", (event, val) => {

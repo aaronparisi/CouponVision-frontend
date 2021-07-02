@@ -9,7 +9,7 @@ const activeCouponsOverTimeReducer = (state = _nullGrocers, action) => {
 
   switch(action.type) {
     case RECEIVE_COUPONS_BY_BRAND_PER_GROCER:
-      return action.data.grocers
+      return action.grocers
     default:
       return state;
   }
