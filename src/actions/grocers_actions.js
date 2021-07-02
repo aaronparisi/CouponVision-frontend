@@ -19,6 +19,7 @@ export const receiveCouponsByBrandPerGrocer = data => {
 
 // thunk stuff - will be exported to containers
 
+// for stacked bar
 export const getCouponCountsByBrandPerGrocer = () => dispatch => {
   return grocersApiUtil.getCouponCountsByBrandPerGrocer()
   .then(
@@ -34,6 +35,7 @@ export const getCouponCountsByBrandPerGrocer = () => dispatch => {
   )
 }
 
+// for line with time slider
 export const getCouponsByBrandPerGrocer = () => dispatch => {
   return grocersApiUtil.getCouponsByBrandPerGrocer()
   .then(

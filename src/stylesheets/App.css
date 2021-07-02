@@ -58,6 +58,52 @@ nav {
   .data-vis .data-dropdown {
     margin-top: 40px; }
 
+.counts-by-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0px 50px;
+  margin-top: 10px;
+  height: 90vh;
+  width: 100vw; }
+  .counts-by-brand .counts-content {
+    flex-basis: 75%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #eeeeee; }
+    .counts-by-brand .counts-content .legend {
+      margin-left: 5%;
+      flex-basis: 25%;
+      border: 1px solid black; }
+      .counts-by-brand .counts-content .legend .legend-brand {
+        display: flex;
+        flex-direction: row;
+        justify-content: stretch;
+        margin-bottom: 1%; }
+        .counts-by-brand .counts-content .legend .legend-brand .brand-color {
+          flex-basis: 10%;
+          border: 1px solid black;
+          margin-right: 5%; }
+    .counts-by-brand .counts-content .coupon-stacked-tooltip {
+      font-size: 12px;
+      font-family: sans-serif; }
+    .counts-by-brand .counts-content .data-wrapper {
+      height: 100%;
+      width: 75%;
+      padding-left: 5%; }
+      .counts-by-brand .counts-content .data-wrapper svg {
+        overflow: visible; }
+  .counts-by-brand .data-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; }
+  .counts-by-brand .data-dropdown {
+    margin-top: 40px; }
+
 #root, body, html {
   height: 100%;
   width: 100%; }

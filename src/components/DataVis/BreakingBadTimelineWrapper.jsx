@@ -86,7 +86,7 @@ const BreakingBadTimelineWrapper = () => {
   }, [episodes]);
 
   return (
-    <React.Fragment>
+    <div className="data-vis">
       <h1>Breaking Bad Timeline</h1>
       <BreakingBadTimeline 
         episodes={episodes} 
@@ -107,7 +107,7 @@ const BreakingBadTimelineWrapper = () => {
           -
         </button>
       </div>
-    </React.Fragment>
+    </div>
   );
 }
 

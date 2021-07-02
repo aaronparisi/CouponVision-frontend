@@ -18,14 +18,12 @@ const App = props => {
     <React.Fragment >
       <h1>👓 CouponVision 👓</h1>
       <Route path="/" component={NavBarContainer} />
-      <div className="data-vis">
         <Route exact path="/curved-line" component={CurvedLineChartWrapper} />
         <Route exact path="/animated-bar" component={AnimatedBarChartWrapper} />
         <Route exact path="/breaking-bad" component={BreakingBadTimelineWrapper} />
         <Route exact path="/racing-bar" component={RacingBarChartWrapper} />
         <Route exact path="/active-over-time" component={ActiveCouponsOverTimeContainer} />
         <Route exact path="/coupon-counts" component={CouponCountsByBrandContainer} />
-      </div>
     </React.Fragment>
   );
 }

@@ -27,7 +27,7 @@ const CouponCountsByBrandWrapper = ({
   }, [brands.length])  // ! this is hacky
   
   return (
-    <React.Fragment >
+    <div className="counts-by-brand" >
       <h1>Coupon Counts by Brand</h1>
       <br />
       <CouponCountsByBrand 
@@ -43,7 +43,7 @@ const CouponCountsByBrandWrapper = ({
           Generate New Data
         </button>
       </div>
-    </React.Fragment>
+    </div>
   )
 }
 

@@ -71,7 +71,7 @@ const RacingBarChartWrapper = () => {
   }, 200)
   
   return (
-    <React.Fragment >
+    <div className="data-vis">
       <h1>Racing Bar Chart</h1>
       <RacingBarChart data={data} />
       <div className="data-buttons">
@@ -89,7 +89,7 @@ const RacingBarChartWrapper = () => {
         </button>
         <p>Iteration: {iteration}</p>
       </div>
-    </React.Fragment>
+    </div>
   )
 }
 

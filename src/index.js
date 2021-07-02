@@ -9,7 +9,7 @@ import { createBrowserHistory } from 'history'
 
 import axios from 'axios'
 
-const baseUrl = (process.env.NODE_ENV === 'production') ? 'https://coupons.aaronparisidev.com' : 'http://localhost:3000'
+const baseUrl = (process.env.NODE_ENV === 'production') ? 'https://coupon-vision-api.herokuapp.com' : 'http://localhost:3000'
 export const axiosIns =  axios.create({
   baseURL: baseUrl,
   withCredentials: true

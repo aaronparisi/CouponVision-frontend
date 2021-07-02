@@ -23,12 +23,10 @@ const ActiveCouponsOverTimeWrapper = ({
 
   useEffect(() => {
     if (grocers.length === 0) getCouponsByBrandPerGrocer()
-    // ? just use local state?
-    // ? redux lets me keep data so i don't have to query again
   }, [])
 
   return (
-    <React.Fragment >
+    <div className="data-vis">
       <h1>Non-Expired Coupons Over Time</h1>
       <br />
       <ActiveCouponsOverTime grocers={grocers} minDate={minDate} maxDate={maxDate} curDate={curDate} />
@@ -40,7 +38,7 @@ const ActiveCouponsOverTimeWrapper = ({
           Generate New Data
         </button>
       </div>
-    </React.Fragment>
+    </div>
   )
 }
 

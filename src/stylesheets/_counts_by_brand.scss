@@ -1,0 +1,71 @@
+@import "colors";
+
+.counts-by-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0px 50px;
+  margin-top: 10px;
+  height: 90vh;
+  width: 100vw;
+
+  & .counts-content {  
+    flex-basis: 75%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    & .legend {
+      margin-left: 5%;
+      flex-basis: 25%;
+      border: 1px solid black;
+
+      & .legend-brand {
+        display: flex;
+        flex-direction: row;
+        justify-content: stretch;
+        margin-bottom: 1%;
+
+        & .brand-color {
+          flex-basis: 10%;
+          border: 1px solid black;
+          margin-right: 5%;
+        }
+      }
+    }
+
+    & .coupon-stacked-tooltip {
+      font-size: 12px;
+      font-family: sans-serif;
+    }
+  
+    background-color: #eeeeee;
+  
+    & .data-wrapper {
+      height: 100%;
+      width: 75%;
+      padding-left: 5%;
+      svg {
+        overflow: visible;
+      }
+    }
+
+    & .legend {
+    }
+  }
+
+  & .data-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & .data-dropdown {
+    margin-top: 40px;
+    
+  }
+}
+

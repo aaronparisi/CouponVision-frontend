@@ -23,7 +23,6 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate }) => {
   const [colors, setColors] = useState({})
 
   useEffect(() => {
-    console.log('changing colors')
     const colors = {}
 
     grocers.forEach(grocer => {
@@ -119,8 +118,6 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate }) => {
       .attr("stroke", val => colors[val.grocer.name])
       .attr("stroke-width", "2")
       .attr("class", "line")
-      // .attr("data-last-count", val => val["pairs"][val["pairs"].length-1].numActive)
-      // .attr("data-grocer", val => val["grocer"].name)
       .on("mouseenter", (event, val) => {
         const toolTipNum = val.pairs[val.pairs.length-1].numActive
         const toolTipName = val.grocer.name
@@ -141,10 +138,10 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate }) => {
       .on("mouseleave", (event, val) => {
         svg.select(".active-counts-tooltip").remove()
       })
-  }, [grocers, wrapperContentRect, curDate])
+  }, [grocers, wrapperContentRect, curDate, colors])
   
   return <React.Fragment >
-    <div className="data-wrapper" ref={wrapperRef}>
+    <div className="data-wrapper" ref={wrapperRef} >
       <svg ref={svgRef}>
         <g className="x-axis" />
         <g className="y-axis" />
