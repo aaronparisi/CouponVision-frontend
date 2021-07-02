@@ -79,6 +79,15 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
       .attr("width", sequence => xScale(sequence[1]) - xScale(sequence[0]))
       .attr("y", sequence => yScale(sequence.data.grocer_name))
       .attr("height", yScale.bandwidth())
+      // .attr("style", (layer, idx) => {
+      //   debugger
+      //   const color = colors[idx]
+      //   if (!hoverColor || color !== hoverColor) {
+      //     return "outline: none"
+      //   } else {
+      //     return "outline: thin solid black"
+      //   }
+      // })
       .on("mouseenter", (event, val) => {
         const tgt = event.currentTarget  // the 'rect'
         const couponCount = val[1] - val[0]
