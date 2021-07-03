@@ -22,7 +22,7 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
   useEffect(() => {
     const svg = select(svgRef.current)
     const { width, height } = wrapperContentRect || wrapperRef.current.getBoundingClientRect()
-  
+
     // stacks, layers
     const stackGenerator = stack()
       .keys(keys)
@@ -79,6 +79,8 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
       .attr("width", sequence => xScale(sequence[1]) - xScale(sequence[0]))
       .attr("y", sequence => yScale(sequence.data.grocer_name))
       .attr("height", yScale.bandwidth())
+      // atodo can I get an outline on the bars?
+      // current issue is that the bar doesn't know what color it is...
       // .attr("style", (layer, idx) => {
       //   debugger
       //   const color = colors[idx]
