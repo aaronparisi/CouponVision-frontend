@@ -1,0 +1,13 @@
+@import "colors";
+
+.description {
+  padding: 5% 10%;
+  
+  & h1 {
+    text-align: center;
+  }
+
+  & ul {
+    list-style-type: square;
+  }
+}

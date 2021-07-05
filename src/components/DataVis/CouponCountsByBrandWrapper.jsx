@@ -35,11 +35,11 @@ const CouponCountsByBrandWrapper = ({
         colors={colors} 
       />
       <div className="data-buttons">
-        <button
+        {/* <button
           onClick={e => generateNewData(e)}
         >
           Generate New Data
-        </button>
+        </button> */}
       </div>
     </div>
   )

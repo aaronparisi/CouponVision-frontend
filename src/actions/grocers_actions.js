@@ -32,9 +32,8 @@ export const getCouponCountsByBrandPerGrocer = () => dispatch => {
         const addColors = {
           grocers: couponCountsByBrandData.data.grocers,
           brands: couponCountsByBrandData.data.brands,
-          numColors: couponCountsByBrandData.data.brands.length  // ! this chart needs colors per brand
+          numColors: couponCountsByBrandData.data.brands.length  // this chart needs colors per brand
         }
-        console.log(addColors.numColors)
         dispatch(receiveCouponCountsByBrandPerGrocer(addColors))
       }
       return couponCountsByBrandData
@@ -54,9 +53,8 @@ export const getCouponsByBrandPerGrocer = () => dispatch => {
         const addColors = {
           grocers: couponsByBrandData.data.grocers,
           brands: couponsByBrandData.data.brands,
-          numColors: couponsByBrandData.data.grocers.length  // ! this one needs colors per grocer
+          numColors: couponsByBrandData.data.grocers.length  // this one needs colors per grocer
         }
-        console.log(addColors.numColors)
         dispatch(receiveCouponsByBrandPerGrocer(addColors))
       }
       return couponsByBrandData

@@ -33,11 +33,11 @@ const ActiveCouponsOverTimeWrapper = ({
       <ActiveCouponsOverTime grocers={grocers} minDate={minDate} maxDate={maxDate} curDate={curDate} colors={colors} />
       <div className="data-buttons">
         <DateSliderContainer minDate={minDate} maxDate={maxDate} />
-        <button
+        {/* <button
           onClick={e => generateNewData(e)}
         >
           Generate New Data
-        </button>
+        </button> */}
       </div>
     </div>
   )

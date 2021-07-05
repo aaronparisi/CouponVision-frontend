@@ -29,6 +29,13 @@ nav {
       nav .nav-links .nav-link a:hover {
         background-color: #cccccc; }
 
+.description {
+  padding: 5% 10%; }
+  .description h1 {
+    text-align: center; }
+  .description ul {
+    list-style-type: square; }
+
 .data-vis {
   display: flex;
   flex-direction: column;

@@ -10,6 +10,7 @@ import CouponCountsByBrandContainer from '../DataVis/CouponCountsByBrandContaine
 
 // import HomeContainer from '../Home/HomeContainer';
 import NavBarContainer from '../NavBar/NavBarContainer'
+import Description from '../Description/Description'
 import CurvedLineChartWrapper from '../DataVis/CurvedLineChartWrapper';
 
 const App = props => {
@@ -17,7 +18,8 @@ const App = props => {
   return (
     <React.Fragment >
       <h1>👓 CouponVision 👓</h1>
-      <Route path="/" component={NavBarContainer} />
+        <Route path="/" component={NavBarContainer} />
+        <Route exace path="/" component={Description} />
         <Route exact path="/curved-line" component={CurvedLineChartWrapper} />
         <Route exact path="/animated-bar" component={AnimatedBarChartWrapper} />
         <Route exact path="/breaking-bad" component={BreakingBadTimelineWrapper} />
