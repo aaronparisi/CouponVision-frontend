@@ -176,8 +176,8 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
               />
               <label htmlFor={`${grocer_name}`}>
                 <div className="label-name">{grocer_name}</div>
-                <div className="label-color" style={{backgroundColor: colors[grocer_name]}}></div>
               </label>
+              <div className="label-color" style={{backgroundColor: colors[grocer_name]}}></div>
             </div>
           )
         })

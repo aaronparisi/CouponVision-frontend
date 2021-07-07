@@ -64,7 +64,7 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
       .data(layers)
       .join("g")
       .attr("class", "layer")
-      .attr("fill", layer => {  // atodo fix colors here
+      .attr("fill", layer => {
         const color = colors[brands[layer.key-1].name]
         const fadedColor = color + "33"
 

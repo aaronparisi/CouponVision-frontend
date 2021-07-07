@@ -19,11 +19,21 @@
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
-      justify-content: center;
+      justify-content: stretch;
+      height: max-content;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #bbbbbb;
+      }
+
+      & input[type="checkbox"] {
+        flex-basis: 10%;
+      }
 
       & label {
         height: min-content;
-        flex-basis: 50%;
+        flex-basis: 70%;
         display: flex;
         flex-direction: row;
         justify-content: stretch;
@@ -35,11 +45,12 @@
           white-space: nowrap;
         }
 
-        & .label-color {
-          margin-left: 5%;
-          flex-basis: 10%;
-          border: 1px solid black;
-        }
+      }
+      & .label-color {
+        margin-left: 5%;
+        flex-basis: 10%;
+        border: 1px solid black;
+        border-radius: 5px;
       }
     }
   }

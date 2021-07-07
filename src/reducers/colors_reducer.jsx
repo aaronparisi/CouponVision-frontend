@@ -3,8 +3,7 @@ import {
   RECEIVE_COUPONS_BY_BRAND_PER_GROCER
 } from '../actions/grocers_actions'
 
-var randomColor = require('random-color');
-var cd = require('color-difference')
+import distinctColors from 'distinct-colors'
 
 const _nullColors = {
   activeOverTimeColors: {},
@@ -14,18 +13,10 @@ const _nullColors = {
 const genColors = (names, numColors) => {
   // returns an array of hex colors,
   // ensuring "sufficienty" differentiation in colors
-  // atodo make colors "different enough" while ensuring speed of generation
-  const colors = {}
-  const diffIdx = 5
+  // atodo no need for numColors anymore
+  const colors = distinctColors({ count: numColors }).map(color => color.hex())
   
-  names.forEach(name => {
-    let toAdd = randomColor(0.99, 0.99).hexString()
-    
-    while (Object.values(colors).some(color => cd.compare(color, toAdd) < diffIdx)) {
-      toAdd = randomColor(0.99, 0.99).hexString()
-    }
-    colors[name] = toAdd
-  })
+  names.forEach((name, idx) => colors[name] = colors[idx])
 
   return colors
 }
