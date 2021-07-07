@@ -1,10 +1,11 @@
 .data-vis {
+  flex-basis: 85%;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
+  justify-content: stretch;
   padding: 0px 50px;
   margin-top: 10px;
-  height: 90vh;
   width: 100vw;
 
   & .tooltip {
@@ -12,15 +13,10 @@
     font-family: sans-serif;
   }
 
-  & .coupon-stacked-tooltip {
-    font-size: 12px;
-    font-family: sans-serif;
-  }
-
   background-color: #eeeeee;
 
   & .data-wrapper {
-    height: 100%;
+    flex-basis: 50%;
     width: 100%;
     svg {
       overflow: visible;
@@ -28,6 +24,9 @@
   }
 
   & .data-buttons {
+    width: 100%;
+    flex-basis: 10%;
+    margin-bottom: -10%;
     margin-top: 20px;
     display: flex;
     flex-direction: row;

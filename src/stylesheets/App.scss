@@ -4,6 +4,7 @@
 @import "description";
 @import "data_vis";
 @import "counts_by_brand";
+@import "active_over_time";
 
 #root, body, html {
   height: 100%;
@@ -14,4 +15,5 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: stretch;
 }

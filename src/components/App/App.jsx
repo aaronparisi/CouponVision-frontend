@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import AnimatedBarChartWrapper from '../DataVis/AnimatedBarChartWrapper';
 import BreakingBadTimelineWrapper from '../DataVis/BreakingBadTimelineWrapper';
@@ -17,9 +18,9 @@ const App = props => {
 
   return (
     <React.Fragment >
-      <h1>👓 CouponVision 👓</h1>
+      <Link to="/" ><h1>👓 CouponVision 👓</h1></Link>
         <Route path="/" component={NavBarContainer} />
-        <Route exace path="/" component={Description} />
+        <Route exact path="/" component={Description} />
         <Route exact path="/curved-line" component={CurvedLineChartWrapper} />
         <Route exact path="/animated-bar" component={AnimatedBarChartWrapper} />
         <Route exact path="/breaking-bad" component={BreakingBadTimelineWrapper} />

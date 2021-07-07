@@ -24,6 +24,7 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
     const { width, height } = wrapperContentRect || wrapperRef.current.getBoundingClientRect()
 
     // stacks, layers
+    // ???? aren't the layers supposed to be per brand???
     const stackGenerator = stack()
       .keys(keys)
       .order(stackOrderAscending);
@@ -62,8 +63,8 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
       .data(layers)
       .join("g")
       .attr("class", "layer")
-      .attr("fill", layer => {
-        const color = colors[layer.key - 1]
+      .attr("fill", layer => {  // atodo fix colors here
+        const color = colors[layer.brand.name]
         const fadedColor = color + "33"
 
         if (!hoverColor || color === hoverColor) {
@@ -125,36 +126,38 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
 
   }, [grocers, brands, colors, keys, wrapperContentRect, hoverColor])
   
-  return <div className="counts-content" >
-    <div className="data-wrapper" ref={wrapperRef} >
-      <svg ref={svgRef} style={{paddingLeft: "4%"}}>
-        <g className="x-axis" />
-        <g className="y-axis" />
-      </svg>
+  return (
+    <div className="counts-content" >
+      <div className="data-wrapper" ref={wrapperRef} >
+        <svg ref={svgRef} style={{paddingLeft: "4%"}}>
+          <g className="x-axis" />
+          <g className="y-axis" />
+        </svg>
+      </div>
+      <div className="legend">
+        <ul>
+          {
+            brands.map((brand, idx) => {
+              return <li 
+                key={idx}
+                id={idx}
+                className="legend-brand" 
+                onMouseEnter={e => {
+                  setHoverColor(colors[e.currentTarget.id])
+                }}
+                onMouseLeave={e => {
+                  setHoverColor(null)
+                }}
+              >
+                <div className="brand-color" style={{backgroundColor: colors[brand.name]}}></div>
+                {brand.name}
+              </li>
+            })
+          }
+        </ul>
+      </div>
     </div>
-    <div className="legend">
-      <ul>
-        {
-          brands.map((brand, idx) => {
-            return <li 
-              key={idx}
-              id={idx}
-              className="legend-brand" 
-              onMouseEnter={e => {
-                setHoverColor(colors[e.currentTarget.id])
-              }}
-              onMouseLeave={e => {
-                setHoverColor(null)
-              }}
-            >
-              <div className="brand-color" style={{backgroundColor: colors[idx]}}></div>
-              {brand.name}
-            </li>
-          })
-        }
-      </ul>
-    </div>
-  </div>
+  )
 }
 
 export default CouponCountsByBrand

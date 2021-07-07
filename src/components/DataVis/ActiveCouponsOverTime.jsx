@@ -18,6 +18,26 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
   const svgRef = useRef()
   const wrapperRef = useRef()
   const wrapperContentRect = useResizeObserver(wrapperRef)
+
+  const [selectedGrocers, setSelectedGrocers] = useState({})
+
+  const couponIsActive = (coupon, aDate) => {
+    return (
+      (new Date(coupon.activation_date) <= aDate) &&
+      (new Date(coupon.expiration_date) >= aDate)
+    )
+  }
+
+  useEffect(() => {
+    setSelectedGrocers(
+      grocers.reduce((obj, grocer) => {
+        return {
+          ...obj,
+          [grocer.name]: true
+        }
+      }, {})
+    )
+  }, [grocers.length])
   
   useEffect(() => {
     const svg = select(svgRef.current)
@@ -37,9 +57,7 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
         // get number of coupons active at this date
         const numActive = grocer
           .coupons_by_brand
-          .filter(coupon => {
-            return new Date(coupon.expiration_date) > aDate
-          })
+          .filter(coupon => couponIsActive(coupon, aDate))
           .length
 
         pairs.push({date: aDate, numActive: numActive })
@@ -54,7 +72,12 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
       return ret;
     }
 
-    const lines = grocers.map(grocer => {
+    const lines = grocers
+      // .filter(grocer => selectedGrocers[grocer.name])
+        // anote we do the filtering at the point of data attachment
+        // => lets us have the full list of grocers for the y-scale
+        // => selecting and de-selecting grocers does not change the scale
+      .map(grocer => {
       // maps the array of grocers to an array of objects consisting of:
       // a grocer (has info about the grocer to be used for data attr's),
       // an array of date-numActive pairs, for the d attr of the line
@@ -96,13 +119,13 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
     
     svg
       .selectAll(".line")
-      .data(lines)
+      .data(lines.filter(line => selectedGrocers[line.grocer.name]))
       .join("path")
       .attr("d", val => {
         return genLine(val.pairs)
       })
       .attr("fill", "none")
-      .attr("stroke", (val, idx) => colors[idx])
+      .attr("stroke", (val, idx) => colors[val.grocer.name])
       .attr("stroke-width", "2")
       .attr("class", "line")
       .on("mouseenter", (event, val) => {
@@ -125,7 +148,8 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
       .on("mouseleave", (event, val) => {
         svg.select(".active-counts-tooltip").remove()
       })
-  }, [grocers, wrapperContentRect, curDate, colors])
+  }, [grocers, wrapperContentRect, curDate, colors, Object.values(selectedGrocers)])
+  // atodo dependency array has ARRAY in it (grocers) => how to test array equality?
   
   return <React.Fragment >
     <div className="data-wrapper" ref={wrapperRef} >
@@ -133,6 +157,31 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
         <g className="x-axis" />
         <g className="y-axis" />
       </svg>
+    </div>
+    <div className="legend">
+      {
+        Object.keys(selectedGrocers).map((grocer_name, idx) => {
+          return (
+            <div className="grocer-checkbox" key={idx}>
+              <input 
+                type="checkbox" 
+                id={`${grocer_name}`} 
+                onClick={e => {
+                  setSelectedGrocers({
+                    ...selectedGrocers,
+                    [e.currentTarget.id]: e.currentTarget.checked
+                  })
+                }}
+                defaultChecked={true}
+              />
+              <label htmlFor={`${grocer_name}`}>
+                <div className="label-name">{grocer_name}</div>
+                <div className="label-color" style={{backgroundColor: colors[grocer_name]}}></div>
+              </label>
+            </div>
+          )
+        })
+      }
     </div>
   </React.Fragment>
 }

@@ -1,14 +1,6 @@
 @import "colors";
 
 .counts-by-brand {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: stretch;
-  padding: 0px 50px;
-  margin-top: 10px;
-  height: 90vh;
-  width: 100vw;
 
   & .counts-content {  
     flex-basis: 75%;
@@ -39,33 +31,6 @@
       font-size: 12px;
       font-family: sans-serif;
     }
-  
-    background-color: #eeeeee;
-  
-    & .data-wrapper {
-      height: 100%;
-      width: 75%;
-      padding-left: 5%;
-      svg {
-        overflow: visible;
-      }
-    }
-
-    & .legend {
-    }
-  }
-
-  & .data-buttons {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-
-  & .data-dropdown {
-    margin-top: 40px;
-    
   }
 }
 

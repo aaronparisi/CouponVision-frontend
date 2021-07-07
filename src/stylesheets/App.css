@@ -18,7 +18,8 @@ img {
   height: auto; }
 
 nav {
-  margin-top: 10px; }
+  margin-top: 10px;
+  flex-basis: 5%; }
   nav .nav-links {
     display: flex;
     flex-direction: row;
@@ -37,26 +38,27 @@ nav {
     list-style-type: square; }
 
 .data-vis {
+  flex-basis: 85%;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
+  justify-content: stretch;
   padding: 0px 50px;
   margin-top: 10px;
-  height: 90vh;
   width: 100vw;
   background-color: #eeeeee; }
   .data-vis .tooltip {
     font-size: 20px;
     font-family: sans-serif; }
-  .data-vis .coupon-stacked-tooltip {
-    font-size: 12px;
-    font-family: sans-serif; }
   .data-vis .data-wrapper {
-    height: 100%;
+    flex-basis: 50%;
     width: 100%; }
     .data-vis .data-wrapper svg {
       overflow: visible; }
   .data-vis .data-buttons {
+    width: 100%;
+    flex-basis: 10%;
+    margin-bottom: -10%;
     margin-top: 20px;
     display: flex;
     flex-direction: row;
@@ -65,51 +67,59 @@ nav {
   .data-vis .data-dropdown {
     margin-top: 40px; }
 
-.counts-by-brand {
+.counts-by-brand .counts-content {
+  flex-basis: 75%;
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  flex-direction: row;
+  justify-content: space-between; }
+  .counts-by-brand .counts-content .legend {
+    margin-left: 5%;
+    flex-basis: 25%;
+    border: 1px solid black; }
+    .counts-by-brand .counts-content .legend .legend-brand {
+      display: flex;
+      flex-direction: row;
+      justify-content: stretch;
+      padding: 1%; }
+      .counts-by-brand .counts-content .legend .legend-brand .brand-color {
+        flex-basis: 10%;
+        border: 1px solid black;
+        margin-right: 5%; }
+  .counts-by-brand .counts-content .coupon-stacked-tooltip {
+    font-size: 12px;
+    font-family: sans-serif; }
+
+.active-over-time .legend {
+  flex-basis: 40%;
+  display: flex;
+  flex-direction: row;
   justify-content: stretch;
-  padding: 0px 50px;
-  margin-top: 10px;
-  height: 90vh;
-  width: 100vw; }
-  .counts-by-brand .counts-content {
-    flex-basis: 75%;
+  flex-wrap: wrap;
+  margin-top: 3%;
+  padding: 1%;
+  border: 1px solid black; }
+  .active-over-time .legend .grocer-checkbox {
+    margin: 1px 5px;
+    flex-basis: 18%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    background-color: #eeeeee; }
-    .counts-by-brand .counts-content .legend {
-      margin-left: 5%;
-      flex-basis: 25%;
-      border: 1px solid black; }
-      .counts-by-brand .counts-content .legend .legend-brand {
-        display: flex;
-        flex-direction: row;
-        justify-content: stretch;
-        padding: 1%; }
-        .counts-by-brand .counts-content .legend .legend-brand .brand-color {
-          flex-basis: 10%;
-          border: 1px solid black;
-          margin-right: 5%; }
-    .counts-by-brand .counts-content .coupon-stacked-tooltip {
-      font-size: 12px;
-      font-family: sans-serif; }
-    .counts-by-brand .counts-content .data-wrapper {
-      height: 100%;
-      width: 75%;
-      padding-left: 5%; }
-      .counts-by-brand .counts-content .data-wrapper svg {
-        overflow: visible; }
-  .counts-by-brand .data-buttons {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center; }
-  .counts-by-brand .data-dropdown {
-    margin-top: 40px; }
+    flex-wrap: nowrap;
+    justify-content: center; }
+    .active-over-time .legend .grocer-checkbox label {
+      height: min-content;
+      flex-basis: 50%;
+      display: flex;
+      flex-direction: row;
+      justify-content: stretch; }
+      .active-over-time .legend .grocer-checkbox label .label-name {
+        flex-basis: 80%;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+        white-space: nowrap; }
+      .active-over-time .legend .grocer-checkbox label .label-color {
+        margin-left: 5%;
+        flex-basis: 10%;
+        border: 1px solid black; }
 
 #root, body, html {
   height: 100%;
@@ -118,6 +128,7 @@ nav {
 #root {
   display: flex;
   flex-direction: column;
-  align-items: center; }
+  align-items: center;
+  justify-content: stretch; }
 
 /*# sourceMappingURL=App.css.map */

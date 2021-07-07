@@ -25,7 +25,7 @@ const CouponCountsByBrandWrapper = ({
   // }, [brands.length])  // ! this is hacky
   
   return (
-    <div className="counts-by-brand" >
+    <div className="counts-by-brand data-vis" >
       <h1>Coupon Counts by Brand</h1>
       <br />
       <CouponCountsByBrand 

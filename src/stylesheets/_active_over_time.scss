@@ -1,0 +1,46 @@
+.active-over-time {
+  & .legend {
+    // atodo why is the height of the checkboxes so big??
+    flex-basis: 40%;
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    flex-wrap: wrap;
+
+    // width: 50%;
+    margin-top: 3%;
+    padding: 1%;
+    border: 1px solid black;
+
+    & .grocer-checkbox {
+      margin: 1px 5px;
+      flex-basis: 18%;
+
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+
+      & label {
+        height: min-content;
+        flex-basis: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: stretch;
+
+        & .label-name {
+          flex-basis: 80%;
+          text-overflow: ellipsis;
+          overflow-x: hidden;
+          white-space: nowrap;
+        }
+
+        & .label-color {
+          margin-left: 5%;
+          flex-basis: 10%;
+          border: 1px solid black;
+        }
+      }
+    }
+  }
+}

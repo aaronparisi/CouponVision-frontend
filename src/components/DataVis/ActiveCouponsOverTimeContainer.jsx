@@ -3,6 +3,7 @@ import { getCouponsByBrandPerGrocer } from '../../actions/grocers_actions'
 import ActiveCouponsOverTimeWrapper from './ActiveCouponsOverTimeWrapper'
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(state.colors.activeOverTimeColors)
   return {
     grocers: state.activeCouponsOverTime,
     curDate: state.date,
