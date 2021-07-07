@@ -3,10 +3,16 @@
 .counts-by-brand {
 
   & .counts-content {  
-    flex-basis: 75%;
+    flex-basis: 90%;
+    width: 100%;
+    padding: 0px 2.5%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: stretch;
+
+    & .data-wrapper {
+      flex-basis: 75%;
+    }
 
     & .legend {
       margin-left: 5%;

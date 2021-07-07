@@ -58,13 +58,14 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
       .call(yAxis)
 
     // stacks
+    // debugger
     svg
       .selectAll(".layer")
       .data(layers)
       .join("g")
       .attr("class", "layer")
       .attr("fill", layer => {  // atodo fix colors here
-        const color = colors[layer.brand.name]
+        const color = colors[brands[layer.key-1].name]
         const fadedColor = color + "33"
 
         if (!hoverColor || color === hoverColor) {
@@ -94,7 +95,7 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
       .on("mouseenter", (event, val) => {
         const tgt = event.currentTarget  // the 'rect'
         const couponCount = val[1] - val[0]
-        const brandKey = colors.indexOf(tgt.parentElement.getAttribute("fill")) + 1
+        const brandKey = Object.values(colors).indexOf(tgt.parentElement.getAttribute("fill")) + 1
 
         if (brands.filter(brand => brand.id === brandKey)[0] === undefined) {
           // * I think this can be removed?
@@ -143,7 +144,7 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
                 id={idx}
                 className="legend-brand" 
                 onMouseEnter={e => {
-                  setHoverColor(colors[e.currentTarget.id])
+                  setHoverColor(colors[e.currentTarget.innerText])
                 }}
                 onMouseLeave={e => {
                   setHoverColor(null)
