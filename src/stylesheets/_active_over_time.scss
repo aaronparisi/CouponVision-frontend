@@ -1,4 +1,8 @@
 .active-over-time {
+  & [class*="data-point"]:hover {
+    cursor: pointer;
+  }
+
   & .legend {
     // atodo why is the height of the checkboxes so big??
     flex-basis: 40%;
@@ -11,6 +15,10 @@
     margin-top: 3%;
     padding: 1%;
     border: 1px solid black;
+
+    & .hovered {
+      background-color: #bbbbbb;
+    }
 
     & .grocer-checkbox {
       margin: 1px 5px;

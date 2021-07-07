@@ -93,6 +93,8 @@ nav {
     font-size: 12px;
     font-family: sans-serif; }
 
+.active-over-time [class*="data-point"]:hover {
+  cursor: pointer; }
 .active-over-time .legend {
   flex-basis: 40%;
   display: flex;
@@ -102,6 +104,8 @@ nav {
   margin-top: 3%;
   padding: 1%;
   border: 1px solid black; }
+  .active-over-time .legend .hovered {
+    background-color: #bbbbbb; }
   .active-over-time .legend .grocer-checkbox {
     margin: 1px 5px;
     flex-basis: 18%;

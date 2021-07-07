@@ -24,7 +24,9 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
     const { width, height } = wrapperContentRect || wrapperRef.current.getBoundingClientRect()
 
     // stacks, layers
-    // ???? aren't the layers supposed to be per brand???
+    // ???? aren't the layers supposed to be per brand?
+    // => look at the way the grocers data is formatted
+    //    (it generates layers based off the keys for the coupon counts)
     const stackGenerator = stack()
       .keys(keys)
       .order(stackOrderAscending);

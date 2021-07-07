@@ -28,6 +28,12 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
     )
   }
 
+  const removeApostrophe = string => {
+    return string
+    .split('')
+    .filter(char => /[^']/.test(char)).join('')
+  }
+
   useEffect(() => {
     setSelectedGrocers(
       grocers.reduce((obj, grocer) => {
@@ -60,7 +66,11 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
           .filter(coupon => couponIsActive(coupon, aDate))
           .length
 
-        pairs.push({date: aDate, numActive: numActive })
+        pairs.push({
+          date: aDate, 
+          numActive: numActive,
+          grocerName: grocer.name  // used for point rendering
+        })
 
         aDate = addMonths(aDate, 1)
       }
@@ -84,6 +94,8 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
       const ret = getNumActiveCoupons(grocer)
       return ret;
     })
+
+    const visibleLines = lines.filter(line => selectedGrocers[line.grocer.name])
     
     const yScale = scaleLinear()
       .domain(
@@ -114,12 +126,13 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
       .call(xAxis)
 
     const genLine = line()
-      .x(val => xScale(val["date"]))
-      .y(val => yScale(val["numActive"]))
+      .x(pair => xScale(pair["date"]))
+      .y(pair => yScale(pair["numActive"]))
     
+    // lines
     svg
       .selectAll(".line")
-      .data(lines.filter(line => selectedGrocers[line.grocer.name]))
+      .data(visibleLines)
       .join("path")
       .attr("d", val => {
         return genLine(val.pairs)
@@ -128,28 +141,68 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
       .attr("stroke", (val, idx) => colors[val.grocer.name])
       .attr("stroke-width", "2")
       .attr("class", "line")
-      .on("mouseenter", (event, val) => {
-        const toolTipNum = val.pairs[val.pairs.length-1].numActive
-        const toolTipName = val.grocer.name
-        svg
-          .selectAll("active-counts-tooltip")
-          .data([val])  // ? not sure what this is doing
-          .join((enter) => {
-            return enter.append("text")
-              .attr("x", xScale(curDate) + 2)
+
+      // datapoints
+      const pointsWithGrocerName = visibleLines.reduce((ret, line) => {
+        return ret.concat(line.pairs)
+      }, [])
+
+      svg
+        .selectAll(".data-point")
+        .data(pointsWithGrocerName)
+        .join("circle")
+        .attr("class", "data-point")
+        .attr("fill", point => {
+          return colors[point.grocerName]
+        })
+        .attr("stroke", "none")
+        .attr("cx", point => xScale(point.date))
+        .attr("cy", point => yScale(point.numActive))
+        .attr("r", 3)
+        .on("mouseenter", (event, hoverPoint) => {
+          const toolTipNum = hoverPoint.numActive
+          const toolTipDate = hoverPoint.date
+          const toolTipName = hoverPoint.grocerName
+          // anote you don't necessarily have to do this here,
+          // just grab that info from the passed in hoverPoint data
+          svg
+            .selectAll("active-counts-tooltip")
+            .data([hoverPoint])
+            .join((enter) => {
+              return enter.append("text")
+                .attr("x", xScale(curDate) + 2)
+            })
+            .attr("class", "active-counts-tooltip")
+            .text(`${toolTipName}: ${toolTipNum} on ${toolTipDate.toDateString()}`)
+            .attr("y", yScale(toolTipNum))
+            .transition()
+            .attr("x", xScale(curDate) + 4)
+            .attr("opacity", 1)
+
+          // highlight corresponding legend label
+          document
+            .getElementById(`grocer-checkbox-${removeApostrophe(toolTipName)}`)
+            .classList.add("hovered")
           })
-          .attr("class", "active-counts-tooltip")
-          .text(`${toolTipName}: ${toolTipNum}`)
-          .attr("y", yScale(toolTipNum))
-          .transition()
-          .attr("x", xScale(curDate) + 4)
-          .attr("opacity", 1)
-      })
-      .on("mouseleave", (event, val) => {
-        svg.select(".active-counts-tooltip").remove()
-      })
-  }, [grocers, wrapperContentRect, curDate, colors, Object.values(selectedGrocers)])
-  // atodo dependency array has ARRAY in it (grocers) => how to test array equality?
+          .on("mouseleave", (event, hoverPoint) => {
+            svg.select(".active-counts-tooltip").remove()
+
+            // remove legend label highlight
+            document
+              .getElementById(`grocer-checkbox-${removeApostrophe(hoverPoint.grocerName)}`)
+              .classList.remove("hovered")
+          })
+
+  }, 
+  [
+    grocers.length, 
+    wrapperContentRect, 
+    curDate, 
+    colors, 
+    Object.values(selectedGrocers).filter(checked => checked).length
+  ])
+  // atodo dependency array has ARRAYs in it (grocers, selected grocers)
+  //  => how to test array equality?
   
   return <React.Fragment >
     <div className="data-wrapper" ref={wrapperRef} >
@@ -162,7 +215,11 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
       {
         Object.keys(selectedGrocers).map((grocer_name, idx) => {
           return (
-            <div className="grocer-checkbox" key={idx}>
+            <div 
+              className="grocer-checkbox" 
+              key={idx} 
+              id={`grocer-checkbox-${removeApostrophe(grocer_name)}`}
+            >
               <input 
                 type="checkbox" 
                 id={`${grocer_name}`} 
