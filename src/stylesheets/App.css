@@ -125,7 +125,8 @@ nav {
     flex-wrap: nowrap;
     justify-content: stretch;
     height: max-content;
-    border-radius: 5px; }
+    border-radius: 5px;
+    border: 1px solid #bbbbbb; }
     .active-over-time .legend .grocer-checkbox:hover {
       background-color: #bbbbbb; }
     .active-over-time .legend .grocer-checkbox input[type="checkbox"] {

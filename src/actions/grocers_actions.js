@@ -28,6 +28,14 @@ export const getCouponCountsByBrand = () => dispatch => {
   return grocersApiUtil.getCouponCountsByBrand()
   .then(
     couponCountsByBrandData => {
+      /*
+      data is an array of objects containing a grocer and their coupon counts per brand:
+      [
+        { 1: 2, 2: 4, 9: 0, grocer_name: "Albertson's"},
+        {},
+        ...
+      ]
+      */
       if (couponCountsByBrandData.data !== '') {
         const addColors = {
           grocers: couponCountsByBrandData.data.grocers,
@@ -49,10 +57,21 @@ export const getActiveCouponsOverTime = () => dispatch => {
   return grocersApiUtil.getActiveCouponsOverTime()
   .then(
     activeCouponsOverTimeData => {
+      // data is an array of objects
+      /*
+      [
+        { name: "Albertson's", 
+          coupons: [{activation_date: ..., expiration_date: ...}, {}, ...] 
+        }, 
+        { name: "QFC",
+          coupons: [...]
+        },
+         ...
+      ]
+      */
       if (activeCouponsOverTimeData.data !== '') {
         const addColors = {
           grocers: activeCouponsOverTimeData.data.grocers,
-          brands: activeCouponsOverTimeData.data.brands,
           numColors: activeCouponsOverTimeData.data.grocers.length  // this one needs colors per grocer
         }
         dispatch(receiveActiveCouponsOverTime(addColors))

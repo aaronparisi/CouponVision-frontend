@@ -25,7 +25,7 @@ const ActiveCouponsOverTimeWrapper = ({
   useEffect(() => {
     if (grocers.length === 0) getActiveCouponsOverTime()
   }, [])
-
+  
   return (
     <div className="active-over-time data-vis">
       <h1>Non-Expired Coupons Over Time</h1>

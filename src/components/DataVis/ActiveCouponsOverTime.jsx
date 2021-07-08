@@ -50,7 +50,7 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
     if (
       !wrapperContentRect || 
       !grocers || 
-      grocers.some(grocer => grocer.coupons_by_brand === undefined)
+      grocers.some(grocer => grocer.coupons === undefined)
     ) return
 
     const getNumActiveCoupons = grocer => {
@@ -62,7 +62,7 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
       while (aDate < curDate) {
         // get number of coupons active at this date
         const numActive = grocer
-          .coupons_by_brand
+          .coupons
           .filter(coupon => couponIsActive(coupon, aDate))
           .length
 
