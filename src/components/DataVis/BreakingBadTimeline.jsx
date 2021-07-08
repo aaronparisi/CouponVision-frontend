@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import {
   select,
   min,  // for x-axis
@@ -16,22 +16,20 @@ const getDate = dateString => {
 }
 
 const BreakingBadTimeline = ({ episodes, selectedCharacters }) => {
+  // episodes & selectedCharacters are arrays
   const svgRef = useRef()
   const wrapperRef = useRef()
   const wrapperContentRect = useResizeObserver(wrapperRef)
 
   useEffect(() => {
     const hasCharacters = characters => {
-      if (
-        (selectedCharacters.length > 0) &&
-        (selectedCharacters.some(selChar => selChar !== undefined)) &&
-        (selectedCharacters.every(selChar => {
-          return selChar === undefined || characters.includes(selChar)
-        }))
-      ) {
-        return "lime"
+      // given an array of characters, representing the characters
+      // in a particular episode,
+      // returns true if ALL of the selectedCharacters are in that array
+      if (selectedCharacters.length === 0) {
+        return false
       } else {
-        return "black"
+        return selectedCharacters.every(selChar => characters.includes(selChar))
       }
     }
 
@@ -63,7 +61,13 @@ const BreakingBadTimeline = ({ episodes, selectedCharacters }) => {
       .data(episodes)
       .join("line")
       .attr("class", "episode")
-      .attr("stroke", episode => hasCharacters(episode.characters))
+      .attr("stroke", episode => {
+        if (hasCharacters(episode.characters)) {
+          return "lime"
+        } else {
+          return "black"
+        }
+      })
       .attr("x1", episode => xScale(getDate(episode.air_date)))
       .attr("x2", episode => xScale(getDate(episode.air_date)))
       .attr("y1", wrapperContentRect.height)

@@ -67,6 +67,17 @@ nav {
   .data-vis .data-dropdown {
     margin-top: 40px; }
 
+.data-dropdown {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 50%;
+  margin-top: 1% !important; }
+
+.breaking-buttons {
+  margin-top: 1%;
+  display: flex; }
+
 .counts-by-brand .counts-content {
   flex-basis: 90%;
   width: 100%;

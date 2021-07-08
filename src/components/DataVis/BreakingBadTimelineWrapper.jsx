@@ -5,26 +5,24 @@ const BreakingBadTimelineWrapper = () => {
   const [episodes, setEpisodes] = useState([]);
   const [characters, setCharacters] = useState([]);
   const [selectedCharacters, setSelectedCharacters] = useState({})
-  const [numSelectedCharacters, setNumSelectedCharacters] = useState(0)
+  const [numCharacterDropdowns, setNumCharacterDropdowns] = useState(0)
 
-  const MySelect = ({ idx }) => {
+  const MySelect = ({ character, idx }) => {
+
     const handleCharacterSelect = e => {
       e.preventDefault()
 
-      const newVal = (e.target.value === "Select Character") ? undefined : e.currentTarget.value
-
-      setSelectedCharacters(prevState => {
-        const newState =({ ...prevState })
-        newState[e.target.dataset["charIdx"]] = newVal
-        return newState
+      setSelectedCharacters({
+        ...selectedCharacters,
+        [e.currentTarget.dataset.idx]: e.currentTarget.value
       })
     }
-
+    
     return (
       <select 
-        value={selectedCharacters[idx]}
+        value={character}
         onChange={e => handleCharacterSelect(e)}
-        data-char-idx={idx}
+        data-idx={idx}
       >
         <option>Select Character</option>
         {characters.map(character => (
@@ -34,29 +32,24 @@ const BreakingBadTimelineWrapper = () => {
     )
   }
 
-  const addCharacter = () => {
-    if (numSelectedCharacters >= characters.length) return
+  const addCharacterDropdown = () => {
+    if (numCharacterDropdowns >= characters.length) return
 
-    setNumSelectedCharacters(numSelectedCharacters + 1)
-
-    setSelectedCharacters({
-      ...selectedCharacters,
-      [numSelectedCharacters]: undefined
-    })
+    setNumCharacterDropdowns(numCharacterDropdowns + 1)
   }
 
-  const removeCharacter = () => {
-    if (numSelectedCharacters <= 0) return
+  const removeCharacterDropdown = () => {
+    if (numCharacterDropdowns <= 0) return
+    
+    const newSelected = selectedCharacters
+    delete newSelected[numCharacterDropdowns]
+    setSelectedCharacters(newSelected)
 
-    setSelectedCharacters({
-      ...selectedCharacters,
-      numSelectedCharacters: undefined
-    })
-
-    setNumSelectedCharacters(numSelectedCharacters - 1)
+    setNumCharacterDropdowns(numCharacterDropdowns - 1)
   }
 
   useEffect(() => {
+    // get episodes
     fetch("https://www.breakingbadapi.com/api/episodes?series=Breaking+Bad")
       .then(response => response.ok && response.json())
       .then(episodes => {
@@ -67,6 +60,7 @@ const BreakingBadTimelineWrapper = () => {
   }, []);
 
   useEffect(() => {
+    // get all characters, filter for main characters
     const isMainChar = char => {
       // given a character,
       // returns true if the character is a main character in ANY episode
@@ -85,27 +79,40 @@ const BreakingBadTimelineWrapper = () => {
       .catch(console.error);
   }, [episodes]);
 
+  const charArr = Array.from(Object.values(selectedCharacters))
   return (
     <div className="data-vis">
       <h1>Breaking Bad Timeline</h1>
       <BreakingBadTimeline 
         episodes={episodes} 
-        selectedCharacters={Array.from(Object.values(selectedCharacters))}
+        selectedCharacters={charArr}
       />
-
-      <div className="data-dropdown">
-        <h2>Select character(s)</h2>
-        {
-          [...Array(numSelectedCharacters).keys()].map(idx => {
-            return <MySelect key={idx} idx={idx} />
-          })
-        }
-        <button onClick={e => addCharacter(e)}>
+      <br />
+      <br />
+      <br />
+      <h2>Select character(s)</h2>
+      <div className="breaking-buttons">
+        <button onClick={e => addCharacterDropdown(e)}>
           +
         </button>
-        <button onClick={e => removeCharacter(e)}>
+        <button onClick={e => removeCharacterDropdown(e)}>
           -
         </button>
+      </div>
+      <div className="data-dropdown">
+        {
+          Array(numCharacterDropdowns)
+            .fill()
+            .map((x, idx) => {
+            return (
+              <MySelect 
+                key={idx+1} 
+                idx={idx+1}
+                character={selectedCharacters[idx+1]} 
+              />
+            )
+          })
+        }
       </div>
     </div>
   );
