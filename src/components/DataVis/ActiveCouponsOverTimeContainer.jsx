@@ -1,18 +1,18 @@
 import { connect } from 'react-redux'
-import { getCouponsByBrandPerGrocer } from '../../actions/grocers_actions'
+import { getActiveCouponsOverTime } from '../../actions/grocers_actions'
 import ActiveCouponsOverTimeWrapper from './ActiveCouponsOverTimeWrapper'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     grocers: state.activeCouponsOverTime,
     curDate: state.date,
-    colors: state.colors.activeOverTimeColors
+    colors: state.colors.activeCouponsOverTimeColors
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCouponsByBrandPerGrocer: e => dispatch(getCouponsByBrandPerGrocer())
+    getActiveCouponsOverTime: e => dispatch(getActiveCouponsOverTime())
   }
 }
 

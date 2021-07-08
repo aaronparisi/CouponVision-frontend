@@ -11,7 +11,7 @@ const ActiveCouponsOverTimeWrapper = ({
   grocers,
   curDate,
   colors,
-  getCouponsByBrandPerGrocer
+  getActiveCouponsOverTime
 }) => {
   const minDate = subYears(startOfToday(), 2)
   const maxDate = addYears(startOfToday(), 2)
@@ -23,7 +23,7 @@ const ActiveCouponsOverTimeWrapper = ({
   }
 
   useEffect(() => {
-    if (grocers.length === 0) getCouponsByBrandPerGrocer()
+    if (grocers.length === 0) getActiveCouponsOverTime()
   }, [])
 
   return (

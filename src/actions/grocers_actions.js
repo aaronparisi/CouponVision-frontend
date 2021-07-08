@@ -1,20 +1,20 @@
 import * as grocersApiUtil from '../utils/grocers_util'
 
-export const RECEIVE_COUPON_COUNTS_BY_BRAND_PER_GROCER = 'RECEIVE_COUPON_COUNTS_BY_BRAND_PER_GROCER'
-export const RECEIVE_COUPONS_BY_BRAND_PER_GROCER = 'RECEIVE_COUPONS_BY_BRAND_PER_GROCER'
+export const RECEIVE_COUPON_COUNTS_BY_BRAND = 'RECEIVE_COUPON_COUNTS_BY_BRAND'
+export const RECEIVE_ACTIVE_COUPONS_OVER_TIME = 'RECEIVE_ACTIVE_COUPONS_OVER_TIME'
 
-export const receiveCouponCountsByBrandPerGrocer = data => {
+export const receiveCouponsByBrand = data => {
   return {
-    type: RECEIVE_COUPON_COUNTS_BY_BRAND_PER_GROCER,
+    type: RECEIVE_COUPON_COUNTS_BY_BRAND,
     grocers: data.grocers,
     brands: data.brands,
     numColors: data.numColors
   }
 }
 
-export const receiveCouponsByBrandPerGrocer = data => {
+export const receiveActiveCouponsOverTime = data => {
   return {
-    type: RECEIVE_COUPONS_BY_BRAND_PER_GROCER,
+    type: RECEIVE_ACTIVE_COUPONS_OVER_TIME,
     grocers: data.grocers,
     brands: data.brands,
     numColors: data.numColors
@@ -24,8 +24,8 @@ export const receiveCouponsByBrandPerGrocer = data => {
 // thunk stuff - will be exported to containers
 
 // for stacked bar
-export const getCouponCountsByBrandPerGrocer = () => dispatch => {
-  return grocersApiUtil.getCouponCountsByBrandPerGrocer()
+export const getCouponCountsByBrand = () => dispatch => {
+  return grocersApiUtil.getCouponCountsByBrand()
   .then(
     couponCountsByBrandData => {
       if (couponCountsByBrandData.data !== '') {
@@ -34,7 +34,7 @@ export const getCouponCountsByBrandPerGrocer = () => dispatch => {
           brands: couponCountsByBrandData.data.brands,
           numColors: couponCountsByBrandData.data.brands.length  // this chart needs colors per brand
         }
-        dispatch(receiveCouponCountsByBrandPerGrocer(addColors))
+        dispatch(receiveCouponsByBrand(addColors))
       }
       return couponCountsByBrandData
     },
@@ -45,19 +45,19 @@ export const getCouponCountsByBrandPerGrocer = () => dispatch => {
 }
 
 // for line with time slider
-export const getCouponsByBrandPerGrocer = () => dispatch => {
-  return grocersApiUtil.getCouponsByBrandPerGrocer()
+export const getActiveCouponsOverTime = () => dispatch => {
+  return grocersApiUtil.getActiveCouponsOverTime()
   .then(
-    couponsByBrandData => {
-      if (couponsByBrandData.data !== '') {
+    activeCouponsOverTimeData => {
+      if (activeCouponsOverTimeData.data !== '') {
         const addColors = {
-          grocers: couponsByBrandData.data.grocers,
-          brands: couponsByBrandData.data.brands,
-          numColors: couponsByBrandData.data.grocers.length  // this one needs colors per grocer
+          grocers: activeCouponsOverTimeData.data.grocers,
+          brands: activeCouponsOverTimeData.data.brands,
+          numColors: activeCouponsOverTimeData.data.grocers.length  // this one needs colors per grocer
         }
-        dispatch(receiveCouponsByBrandPerGrocer(addColors))
+        dispatch(receiveActiveCouponsOverTime(addColors))
       }
-      return couponsByBrandData
+      return activeCouponsOverTimeData
     },
     err => {
       console.log('error getting coupons by brand per grocer')

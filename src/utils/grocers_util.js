@@ -1,15 +1,15 @@
 import { axiosIns } from "../index"
 
-export const getCouponCountsByBrandPerGrocer = () => {
+export const getCouponCountsByBrand = () => {
   return axiosIns({
     method: 'get',
-    url: '/api/grocers/coupon_counts_by_brand_per_grocer',
+    url: '/api/coupon_counts_by_brand',
   })
 }
 
-export const getCouponsByBrandPerGrocer = () => {
+export const getActiveCouponsOverTime = () => {
   return axiosIns({
     method: 'get',
-    url: '/api/grocers/coupons_by_brand_per_grocer',
+    url: '/api/active_coupons_over_time',
   })
 }

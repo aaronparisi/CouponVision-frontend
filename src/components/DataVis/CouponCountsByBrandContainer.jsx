@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getCouponCountsByBrandPerGrocer } from '../../actions/grocers_actions'
+import { getCouponCountsByBrand } from '../../actions/grocers_actions'
 import CouponCountsByBrandWrapper from './CouponCountsByBrandWrapper'
 
 const mapStateToProps = (state, ownProps) => {
@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCouponCounts: e => dispatch(getCouponCountsByBrandPerGrocer())
+    getCouponCountsByBrand: e => dispatch(getCouponCountsByBrand())
   }
 }
 

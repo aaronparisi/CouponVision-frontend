@@ -8,7 +8,7 @@ const CouponCountsByBrandWrapper = ({
   grocers,
   brands,
   colors,
-  getCouponCounts
+  getCouponCountsByBrand
 }) => {
   const generateNewData = e => {
     e.preventDefault()
@@ -17,8 +17,8 @@ const CouponCountsByBrandWrapper = ({
   }
 
   useEffect(() => {
-    if (grocers.length === 0) getCouponCounts()
-  }, [getCouponCounts])
+    if (grocers.length === 0) getCouponCountsByBrand()
+  }, [getCouponCountsByBrand])
 
   // useEffect(() => {
   //   setColors(randColors(brands.length))
