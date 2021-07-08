@@ -77,7 +77,7 @@ const BreakingBadTimelineWrapper = () => {
         );
       })
       .catch(console.error);
-  }, [episodes]);
+  }, [JSON.stringify(episodes)]);
 
   const charArr = Array.from(Object.values(selectedCharacters))
   return (

@@ -16,12 +16,14 @@ const getDate = dateString => {
 }
 
 const BreakingBadTimeline = ({ episodes, selectedCharacters }) => {
-  // episodes & selectedCharacters are arrays
+  // episodes: array representing all episodes
+  // selectedCharacters: array representing characters selected by dropdowns
   const svgRef = useRef()
   const wrapperRef = useRef()
   const wrapperContentRect = useResizeObserver(wrapperRef)
 
   useEffect(() => {
+    console.log(JSON.stringify(selectedCharacters))
     const hasCharacters = characters => {
       // given an array of characters, representing the characters
       // in a particular episode,
@@ -73,7 +75,7 @@ const BreakingBadTimeline = ({ episodes, selectedCharacters }) => {
       .attr("y1", wrapperContentRect.height)
       .attr("y2", episode => yScale(episode.characters.length))
 
-  }, [episodes, wrapperContentRect, selectedCharacters])
+  }, [JSON.stringify(episodes), wrapperContentRect, JSON.stringify(selectedCharacters)])
 
   return <React.Fragment >
     <div className="data-wrapper" ref={wrapperRef}>
