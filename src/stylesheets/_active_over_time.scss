@@ -1,4 +1,8 @@
 .active-over-time {
+  & .loading {
+    font-size: 100px;
+  }
+
   & [class*="data-point"]:hover {
     cursor: pointer;
   }

@@ -12,7 +12,8 @@ const ActiveCouponsOverTimeWrapper = ({
   earlyDate,
   lateDate,
   colors,
-  getActiveCouponsOverTime
+  getActiveCouponsOverTime,
+  loading
 }) => {
   const [zoomMode, setZoomMode] = useState(true)
 
@@ -44,7 +45,8 @@ const ActiveCouponsOverTimeWrapper = ({
         lateDate={lateDate} 
         minScaleDate={(zoomMode) ? earlyDate : minDate} 
         maxScaleDate={(zoomMode) ? lateDate : maxDate} 
-        colors={colors} 
+        colors={colors}
+        loading={loading}
       />
       <div className="data-buttons">
         <DateSliderContainer minDate={minDate} maxDate={maxDate} />

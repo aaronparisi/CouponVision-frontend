@@ -25,6 +25,11 @@
         justify-content: stretch;
         padding: 1%;
 
+        &:hover {
+          cursor: pointer;
+          background-color: #cccccc;
+        }
+
         & .brand-color {
           flex-basis: 10%;
           border: 1px solid black;

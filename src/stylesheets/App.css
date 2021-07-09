@@ -96,6 +96,9 @@ nav {
       flex-direction: row;
       justify-content: stretch;
       padding: 1%; }
+      .counts-by-brand .counts-content .legend .legend-brand:hover {
+        cursor: pointer;
+        background-color: #cccccc; }
       .counts-by-brand .counts-content .legend .legend-brand .brand-color {
         flex-basis: 10%;
         border: 1px solid black;
@@ -104,6 +107,8 @@ nav {
     font-size: 12px;
     font-family: sans-serif; }
 
+.active-over-time .loading {
+  font-size: 100px; }
 .active-over-time [class*="data-point"]:hover {
   cursor: pointer; }
 .active-over-time .legend {

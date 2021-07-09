@@ -15,7 +15,15 @@ import {
 import useResizeObserver from '../../../helpers/useResizeObserver'
 import Legend from './Legend'
 
-const CouponLineChart = ({ grocers, earlyDate, lateDate, minScaleDate, maxScaleDate, colors }) => {
+const CouponLineChart = ({ 
+  grocers, 
+  earlyDate, 
+  lateDate, 
+  minScaleDate, 
+  maxScaleDate, 
+  colors, 
+  loading 
+}) => {
   const svgRef = useRef()
   const wrapperRef = useRef()
   const wrapperContentRect = useResizeObserver(wrapperRef)
@@ -218,13 +226,21 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, minScaleDate, maxScaleD
     hoverColor
   ])
   // atodo dependency array has ARRAYs in it (grocers, selected grocers)
+
+  const Loading = () => {
+
+    return <div className="loading">Loading...</div>
+  }
   
   return <React.Fragment >
     <div className="data-wrapper" ref={wrapperRef} >
-      <svg ref={svgRef}>
-        <g className="x-axis" />
-        <g className="y-axis" />
-      </svg>
+      {loading
+        ? <Loading />
+        : <svg ref={svgRef}>
+            <g className="x-axis" />
+            <g className="y-axis" />
+          </svg>
+      }
     </div>
     <Legend 
       selectedGrocers={selectedGrocers} 

@@ -2,6 +2,14 @@ import * as grocersApiUtil from '../utils/grocers_util'
 
 export const RECEIVE_COUPON_COUNTS_BY_BRAND = 'RECEIVE_COUPON_COUNTS_BY_BRAND'
 export const RECEIVE_ACTIVE_COUPONS_OVER_TIME = 'RECEIVE_ACTIVE_COUPONS_OVER_TIME'
+export const RECEIVE_LOADING_INFO = 'RECEIVE_LOADING_INFO'
+
+export const receiveLoadingInfo = loading => {
+  return {
+    type: RECEIVE_LOADING_INFO,
+    loading: loading
+  }
+}
 
 export const receiveCouponsByBrand = data => {
   return {
@@ -53,6 +61,7 @@ export const getCouponCountsByBrand = () => dispatch => {
 
 // for line with time slider
 export const getActiveCouponsOverTime = () => dispatch => {
+  dispatch(receiveLoadingInfo(true))
   return grocersApiUtil.getActiveCouponsOverTime()
   .then(
     activeCouponsOverTimeData => {
@@ -74,6 +83,7 @@ export const getActiveCouponsOverTime = () => dispatch => {
           numColors: activeCouponsOverTimeData.data.grocers.length  // this one needs colors per grocer
         }
         dispatch(receiveActiveCouponsOverTime(dataWithColors))
+        dispatch(receiveLoadingInfo(false))
       }
       return activeCouponsOverTimeData
     },

@@ -7,7 +7,8 @@ const mapStateToProps = (state, ownProps) => {
     grocers: state.activeCouponsOverTime,
     earlyDate: state.date[0],
     lateDate: state.date[1],
-    colors: state.colors.activeCouponsOverTimeColors
+    colors: state.colors.activeCouponsOverTimeColors,
+    loading: state.loading
   }
 }
 

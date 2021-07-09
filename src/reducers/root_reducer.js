@@ -8,6 +8,7 @@ import dateReducer from './date_reducer'
 import activeCouponsOverTimeReducer from './active_coupons_over_time_reducer'
 import couponCountsByBrandReducer from './coupon_counts_by_brand_reducer'
 import colorsReducer from './colors_reducer'
+import loadingReducer from './loading_reducer'
 
 export default combineReducers({
   // session: sessionReducer
@@ -18,5 +19,6 @@ export default combineReducers({
   date: dateReducer,
   activeCouponsOverTime: activeCouponsOverTimeReducer,
   couponCountsByBrand: couponCountsByBrandReducer,
-  colors: colorsReducer
+  colors: colorsReducer,
+  loading: loadingReducer
 });
