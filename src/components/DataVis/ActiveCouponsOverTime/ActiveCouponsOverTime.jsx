@@ -14,7 +14,7 @@ import {
 
 import useResizeObserver from '../../../helpers/useResizeObserver'
 
-const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
+const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
   const svgRef = useRef()
   const wrapperRef = useRef()
   const wrapperContentRect = useResizeObserver(wrapperRef)
@@ -23,6 +23,7 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
   const [hoverColor, setHoverColor] = useState(null)
 
   const couponIsActive = (coupon, aDate) => {
+    // * aDate will only go up to lateDate
     return (
       (new Date(coupon.activation_date) <= aDate) &&
       (new Date(coupon.expiration_date) >= aDate)
@@ -58,9 +59,9 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
       // returns an array of objects
       // the objects represent the number of active coupons at a date
       const pairs = []
-      let aDate = minDate
+      let aDate = earlyDate
 
-      while (aDate < curDate) {
+      while (aDate < lateDate) {
         // get number of coupons active at this date
         const numActive = grocer
           .coupons
@@ -110,7 +111,7 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
       .range([wrapperContentRect.height, 0])
 
     const xScale = scaleTime()
-      .domain([minDate, maxDate])
+      .domain([earlyDate, lateDate])
       .range([0, wrapperContentRect.width])
       // .ticks(24)
 
@@ -185,13 +186,13 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
             .data([hoverPoint])
             .join((enter) => {
               return enter.append("text")
-                .attr("x", xScale(curDate) + 2)
+                .attr("x", xScale(lateDate) + 2)
             })
             .attr("class", "active-counts-tooltip")
             .text(`${toolTipName}: ${toolTipNum} on ${toolTipDate.toDateString()}`)
             .attr("y", yScale(toolTipNum))
             .transition()
-            .attr("x", xScale(curDate) + 4)
+            .attr("x", xScale(lateDate) + 4)
             .attr("opacity", 1)
 
           // highlight corresponding legend label
@@ -210,10 +211,11 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
 
   }, 
   [
-    grocers.length, 
-    wrapperContentRect, 
-    curDate, 
-    colors, 
+    grocers.length,
+    wrapperContentRect,
+    earlyDate,
+    lateDate,
+    colors,
     Object.values(selectedGrocers).filter(checked => checked).length,
     hoverColor
   ])

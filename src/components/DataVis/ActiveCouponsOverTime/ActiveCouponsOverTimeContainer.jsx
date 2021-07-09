@@ -5,7 +5,8 @@ import ActiveCouponsOverTimeWrapper from './ActiveCouponsOverTimeWrapper'
 const mapStateToProps = (state, ownProps) => {
   return {
     grocers: state.activeCouponsOverTime,
-    curDate: state.date,
+    earlyDate: state.date.earlyDate,
+    lateDate: state.date.lateDate,
     colors: state.colors.activeCouponsOverTimeColors
   }
 }

@@ -22,30 +22,47 @@ class DateSlider extends Component {
     const today = startOfToday();
 
     this.state = {
-      selected: today,
-      updated: today,
+      earlySelected: minDate,
+      earlyUpdated: minDate,
+      lateSelected: today,
+      lateUpdated: today,
       min: minDate,
       max: maxDate,
       receiveDate: receiveDate
     };
   }
 
-  onChange = ([ms]) => {
+  onEarlyChange = ([ms]) => {
     this.setState({
-      selected: new Date(ms)
+      earlySelected: new Date(ms)
     });
   };
 
-  onUpdate = ([ms]) => {
+  onEarlyUpdate = ([ms]) => {
     this.setState({
-      updated: new Date(ms)
+      earlyUpdated: new Date(ms)
     });
 
-    this.state.receiveDate(new Date(ms))
+    this.state.receiveDate([ "earlyDate", new Date(ms) ])
+    // fixme make sure you adjust for if the sliders cross!!
+  };
+
+  onLateChange = ([ms]) => {
+    this.setState({
+      lateSelected: new Date(ms)
+    });
+  };
+
+  onLateUpdate = ([ms]) => {
+    this.setState({
+      lateUpdated: new Date(ms)
+    });
+
+    this.state.receiveDate([ "lateDate", new Date(ms) ])
   };
 
   componentDidMount = () => {
-    this.state.receiveDate(this.state.updated)
+    this.state.receiveDate(this.state.lateUpdated)
   }
 
   renderDateTime(date, header) {
@@ -65,7 +82,7 @@ class DateSlider extends Component {
   }
 
   render() {
-    const { min, max, selected, updated } = this.state;
+    const { min, max, earlySelected, lateSelected, earlyUpdated, lateUpdated } = this.state;
 
     const dateTicks = scaleTime()
       .domain([min, max])
@@ -75,16 +92,74 @@ class DateSlider extends Component {
     return (
       <div className="date-slider-wrapper" style={{ width: "100%" }}>
         {/* {this.renderDateTime(selected, "Selected")} */}
-        {this.renderDateTime(updated, "Date")}
+        {this.renderDateTime(earlyUpdated, "Date")}
+        - thru -
+        {this.renderDateTime(lateUpdated, "Date")}
         <div style={{ margin: "5%", height: 120, width: "90%" }}>
           <Slider
             mode={1}
             step={halfHour}
             domain={[+min, +max]}
             rootStyle={sliderStyle}
-            onUpdate={this.onUpdate}
-            onChange={this.onChange}
-            values={[+selected]}
+            onUpdate={this.onEarlyUpdate}
+            onChange={this.onEarlyChange}
+            values={[+earlySelected]}
+          >
+            <Rail>
+              {({ getRailProps }) => <SliderRail getRailProps={getRailProps} />}
+            </Rail>
+            <Handles>
+              {({ handles, getHandleProps }) => (
+                <div>
+                  {handles.map(handle => (
+                    <Handle
+                      key={handle.id}
+                      handle={handle}
+                      domain={[+min, +max]}
+                      getHandleProps={getHandleProps}
+                    />
+                  ))}
+                </div>
+              )}
+            </Handles>
+            <Tracks right={false}>
+              {({ tracks, getTrackProps }) => (
+                <div>
+                  {tracks.map(({ id, source, target }) => (
+                    <Track
+                      key={id}
+                      source={source}
+                      target={target}
+                      getTrackProps={getTrackProps}
+                    />
+                  ))}
+                </div>
+              )}
+            </Tracks>
+            <Ticks values={dateTicks}>
+              {({ ticks }) => (
+                <div>
+                  {ticks.map(tick => (
+                    <Tick
+                      key={tick.id}
+                      tick={tick}
+                      count={ticks.length}
+                      format={formatTick}
+                    />
+                  ))}
+                </div>
+              )}
+            </Ticks>
+          </Slider>
+
+          <Slider
+            mode={1}
+            step={halfHour}
+            domain={[+min, +max]}
+            rootStyle={sliderStyle}
+            onUpdate={this.onLateUpdate}
+            onChange={this.onLateChange}
+            values={[+lateSelected]}
           >
             <Rail>
               {({ getRailProps }) => <SliderRail getRailProps={getRailProps} />}
