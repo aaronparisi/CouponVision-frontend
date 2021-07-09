@@ -181,6 +181,7 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
           const toolTipName = hoverPoint.grocerName
           // anote you don't necessarily have to do this here,
           // just grab that info from the passed in hoverPoint data
+          // fixme tooltip is off the screen when later date is at end
           svg
             .selectAll("active-counts-tooltip")
             .data([hoverPoint])
@@ -220,30 +221,14 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
     hoverColor
   ])
   // atodo dependency array has ARRAYs in it (grocers, selected grocers)
-  //  => how to test array equality?
 
   const MyCheckbox = ({ color, grocerName, checked }) => {
-    const handleClick = e => {
-      e.preventDefault()
-      
-      if (!checked) {
-        setHoverColor(color)
-      } else {
-        setHoverColor(null)
-      }
-
-      setSelectedGrocers({
-        ...selectedGrocers,
-        [grocerName]: !checked
-      })
-    }
     
     return (
       <div 
         className="checkbox"
         id={grocerName}
         style={{ backgroundColor: color }}
-        onClick={e => handleClick(e)}
       >
         { (checked) ? `\u2714` : "" }
       </div>
@@ -259,15 +244,33 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
     </div>
     <div className="legend">
       {
-        Object.keys(selectedGrocers).map((grocer_name, idx) => {
+        Object.keys(selectedGrocers).map((grocerName, idx) => {
           return (
             <div 
               className="grocer-checkbox" 
               key={idx} 
-              id={`grocer-checkbox-${removeApostrophe(grocer_name)}`}
-              data-grocer-name={grocer_name}
+              id={`grocer-checkbox-${removeApostrophe(grocerName)}`}
+              data-grocer-name={grocerName}
+              style={{ 
+                backgroundColor: (hoverColor === colors[grocerName]) ? hoverColor + "33" : "#eeeeee"
+              }}
+              onClick={e => {
+                e.preventDefault()
+                const checked = selectedGrocers[grocerName]
+                const color = colors[grocerName]
+
+                if (!checked) {
+                  setHoverColor(color)
+                } else {
+                  setHoverColor(null)
+                }
+          
+                setSelectedGrocers({
+                  ...selectedGrocers,
+                  [grocerName]: !checked
+                })
+              }}
               onMouseEnter={e => {
-                const grocerName = e.currentTarget.firstElementChild.id
                 if (selectedGrocers[grocerName]) {
                   setHoverColor(colors[grocerName])
                 }
@@ -277,14 +280,14 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
               }}
             >
               <MyCheckbox 
-                grocerName={grocer_name} 
-                color={colors[grocer_name]}
-                checked={selectedGrocers[grocer_name]}
+                grocerName={grocerName} 
+                color={colors[grocerName]}
+                checked={selectedGrocers[grocerName]}
               />
-              <label htmlFor={`${grocer_name}`}>
-                <div className="label-name">{grocer_name}</div>
+              <label htmlFor={`${grocerName}`}>
+                {/* <div className="label-name">{grocerName}</div> */}
+                {grocerName}
               </label>
-              {/* <div className="label-color" style={{backgroundColor: colors[grocer_name]}}></div> */}
             </div>
           )
         })
