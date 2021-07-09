@@ -13,6 +13,7 @@ import {
 } from 'date-fns'
 
 import useResizeObserver from '../../../helpers/useResizeObserver'
+import Legend from './Legend'
 
 const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
   const svgRef = useRef()
@@ -30,13 +31,8 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
     )
   }
 
-  const removeApostrophe = string => {
-    return string
-    .split('')
-    .filter(char => /[^']/.test(char)).join('')
-  }
-
   useEffect(() => {
+    // select all grocers on load
     setSelectedGrocers(
       grocers.reduce((obj, grocer) => {
         return {
@@ -48,6 +44,7 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
   }, [grocers.length])
   
   useEffect(() => {
+    // svg rendering
     const svg = select(svgRef.current)
     if (
       !wrapperContentRect || 
@@ -55,9 +52,12 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
       grocers.some(grocer => grocer.coupons === undefined)
     ) return
 
+    const { width, height } = wrapperContentRect
+
     const getNumActiveCoupons = grocer => {
       // returns an array of objects
-      // the objects represent the number of active coupons at a date
+      // the objects represent the number of active coupons
+      // for the given grocer on a particular date
       const pairs = []
       let aDate = earlyDate
 
@@ -84,22 +84,25 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
       return ret;
     }
 
+    // anote keep separate variables for lines and visibleLines
+    // => lets us have the full list of grocers for the y-scale
+    // => selecting and de-selecting grocers does not change the scale
     const lines = grocers
-      // .filter(grocer => selectedGrocers[grocer.name])
-        // anote we do the filtering at the point of data attachment
-        // => lets us have the full list of grocers for the y-scale
-        // => selecting and de-selecting grocers does not change the scale
       .map(grocer => {
-      // maps the array of grocers to an array of objects consisting of:
-      // a grocer (has info about the grocer to be used for data attr's),
-      // an array of date-numActive pairs, for the d attr of the line
       const ret = getNumActiveCoupons(grocer)
       return ret;
     })
+    /*
+    [
+      {grocer: {}, pairs: [ {date: <some-date>, numActive: 5, grocerName: "QFC"}, {}, ...]}, 
+      {...},
+      ...
+    ]
+    */
 
     const visibleLines = lines.filter(line => selectedGrocers[line.grocer.name])
     
-    const yScale = scaleLinear()
+    const yScale = scaleLinear()  // from 0 to the highest coupon count
       .domain(
         [
           0, 
@@ -108,12 +111,12 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
           })
         ]
       )
-      .range([wrapperContentRect.height, 0])
+      .range([height, 0])
 
+    // anote another possibility - make x-scale fixed
     const xScale = scaleTime()
       .domain([earlyDate, lateDate])
-      .range([0, wrapperContentRect.width])
-      // .ticks(24)
+      .range([0, width])
 
     const yAxis = axisLeft(yScale)
     svg
@@ -124,13 +127,20 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
       .ticks(12)
     svg
       .select(".x-axis")
-      .style("transform", `translateY(${wrapperContentRect.height}px)`)
+      .style("transform", `translateY(${height}px)`)
       .call(xAxis)
 
     const genLine = line()
       .x(pair => xScale(pair["date"]))
       .y(pair => yScale(pair["numActive"]))
     
+    const maybeFaded = color => {
+      if (!hoverColor || color === hoverColor) {
+        return color
+      } else {
+        return color + "22"
+      }
+    }
     // lines
     svg
       .selectAll(".line")
@@ -140,20 +150,17 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
         return genLine(val.pairs)
       })
       .attr("fill", "none")
-      .attr("stroke", (val, idx) => {
+      .attr("stroke", val => {
         const color = colors[val.grocer.name]
-        const fadedColor = color + "22"
-        if (!hoverColor || color === hoverColor) {
-          return color
-        } else {
-          return fadedColor
-        }
+        return maybeFaded(color)
       })
       .attr("stroke-width", "2")
       .attr("class", "line")
 
       // datapoints
       const pointsWithGrocerName = visibleLines.reduce((ret, line) => {
+        // collects just the pair objects consisting of
+        // date, numActive, and grocerName
         return ret.concat(line.pairs)
       }, [])
 
@@ -164,12 +171,7 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
         .attr("class", "data-point")
         .attr("fill", point => {
           const color = colors[point.grocerName]
-          const fadedColor = color + "22"
-          if (!hoverColor || color === hoverColor) {
-            return color
-          } else {
-            return fadedColor
-          }
+          return maybeFaded(color)
         })
         .attr("stroke", "none")
         .attr("cx", point => xScale(point.date))
@@ -181,33 +183,26 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
           const toolTipName = hoverPoint.grocerName
           // anote you don't necessarily have to do this here,
           // just grab that info from the passed in hoverPoint data
-          // fixme tooltip is off the screen when later date is at end
           svg
             .selectAll("active-counts-tooltip")
             .data([hoverPoint])
             .join((enter) => {
               return enter.append("text")
-                .attr("x", xScale(lateDate) + 2)
+                .attr("y", yScale(toolTipNum) - 4)
+                .attr("opacity", 0)
             })
             .attr("class", "active-counts-tooltip")
-            .text(`${toolTipName}: ${toolTipNum} on ${toolTipDate.toDateString()}`)
-            .attr("y", yScale(toolTipNum))
+            .text(`${toolTipName}: ${toolTipNum} (${toolTipDate.toDateString()})`)
+            .attr("x", xScale(toolTipDate))
             .transition()
-            .attr("x", xScale(lateDate) + 4)
+            .attr("y", yScale(toolTipNum) - 25)
             .attr("opacity", 1)
-
-          // highlight corresponding legend label
-          document
-            .getElementById(`grocer-checkbox-${removeApostrophe(toolTipName)}`)
-            .classList.add("hovered")
+            
+            setHoverColor(colors[toolTipName])
           })
           .on("mouseleave", (event, hoverPoint) => {
             svg.select(".active-counts-tooltip").remove()
-
-            // remove legend label highlight
-            document
-              .getElementById(`grocer-checkbox-${removeApostrophe(hoverPoint.grocerName)}`)
-              .classList.remove("hovered")
+            setHoverColor(null)
           })
 
   }, 
@@ -221,19 +216,6 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
     hoverColor
   ])
   // atodo dependency array has ARRAYs in it (grocers, selected grocers)
-
-  const MyCheckbox = ({ color, grocerName, checked }) => {
-    
-    return (
-      <div 
-        className="checkbox"
-        id={grocerName}
-        style={{ backgroundColor: color }}
-      >
-        { (checked) ? `\u2714` : "" }
-      </div>
-    )
-  }
   
   return <React.Fragment >
     <div className="data-wrapper" ref={wrapperRef} >
@@ -242,57 +224,13 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
         <g className="y-axis" />
       </svg>
     </div>
-    <div className="legend">
-      {
-        Object.keys(selectedGrocers).map((grocerName, idx) => {
-          return (
-            <div 
-              className="grocer-checkbox" 
-              key={idx} 
-              id={`grocer-checkbox-${removeApostrophe(grocerName)}`}
-              data-grocer-name={grocerName}
-              style={{ 
-                backgroundColor: (hoverColor === colors[grocerName]) ? hoverColor + "33" : "#eeeeee"
-              }}
-              onClick={e => {
-                e.preventDefault()
-                const checked = selectedGrocers[grocerName]
-                const color = colors[grocerName]
-
-                if (!checked) {
-                  setHoverColor(color)
-                } else {
-                  setHoverColor(null)
-                }
-          
-                setSelectedGrocers({
-                  ...selectedGrocers,
-                  [grocerName]: !checked
-                })
-              }}
-              onMouseEnter={e => {
-                if (selectedGrocers[grocerName]) {
-                  setHoverColor(colors[grocerName])
-                }
-              }}
-              onMouseLeave={e => {
-                setHoverColor(null)
-              }}
-            >
-              <MyCheckbox 
-                grocerName={grocerName} 
-                color={colors[grocerName]}
-                checked={selectedGrocers[grocerName]}
-              />
-              <label htmlFor={`${grocerName}`}>
-                {/* <div className="label-name">{grocerName}</div> */}
-                {grocerName}
-              </label>
-            </div>
-          )
-        })
-      }
-    </div>
+    <Legend 
+      selectedGrocers={selectedGrocers} 
+      setSelectedGrocers={setSelectedGrocers}
+      hoverColor={hoverColor}
+      setHoverColor={setHoverColor}
+      colors={colors}
+    />
   </React.Fragment>
 }
 
