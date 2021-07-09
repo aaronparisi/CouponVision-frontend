@@ -1,21 +1,14 @@
 import {
-  RECEIVE_DATE
+  RECEIVE_DATE_RANGE
 } from '../actions/date_actions'
 
-const _nullDate = {
-  earlyDate: new Date().setFullYear(new Date().getFullYear() - 2),
-  lateDate: new Date()
-}
+const _nullDates = []
 
-const dateReducer = (state = _nullDate, action) => {
+const dateReducer = (state = _nullDates, action) => {
   Object.freeze(state)
-
   switch(action.type) {
-    case RECEIVE_DATE:
-      return {
-        ...state,
-        [action.data[0]]: action.data[1]
-      }
+    case RECEIVE_DATE_RANGE:
+      return action.data
     default:
       return state;
   }

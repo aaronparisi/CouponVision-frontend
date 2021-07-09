@@ -14,7 +14,7 @@ const genColors = (names, numColors) => {
   // returns an array of hex colors,
   // ensuring "sufficienty" differentiation in colors
   // atodo no need for numColors anymore
-  const colors = distinctColors({ count: numColors }).map(color => color.hex())
+  const colors = distinctColors({ count: numColors, lightMin: 40, lightMax: 80 }).map(color => color.hex())
 
   return names.reduce((ret, name, idx) => {
     return {

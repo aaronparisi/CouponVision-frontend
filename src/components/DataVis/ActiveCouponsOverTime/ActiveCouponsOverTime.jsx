@@ -142,7 +142,7 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
       .attr("fill", "none")
       .attr("stroke", (val, idx) => {
         const color = colors[val.grocer.name]
-        const fadedColor = color + "33"
+        const fadedColor = color + "22"
         if (!hoverColor || color === hoverColor) {
           return color
         } else {
@@ -164,7 +164,7 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
         .attr("class", "data-point")
         .attr("fill", point => {
           const color = colors[point.grocerName]
-          const fadedColor = color + "33"
+          const fadedColor = color + "22"
           if (!hoverColor || color === hoverColor) {
             return color
           } else {

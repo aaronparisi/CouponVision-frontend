@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { receiveDate } from '../../actions/date_actions'
+import { receiveDateRange } from '../../actions/date_actions'
 import DateSlider from './DateSlider'
 
 const mapStateToProps = (state, ownProps) => {
@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    receiveDate: date => dispatch(receiveDate(date))
+    receiveDateRange: date => dispatch(receiveDateRange(date))
   }
 }
 

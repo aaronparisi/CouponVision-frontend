@@ -1,8 +1,8 @@
-export const RECEIVE_DATE = 'RECEIVE_DATE'
+export const RECEIVE_DATE_RANGE = 'RECEIVE_DATE_RANGE'
 
-export const receiveDate = data => {
+export const receiveDateRange = data => {
   return {
-    type: RECEIVE_DATE,
+    type: RECEIVE_DATE_RANGE,
     data
   }
 }
