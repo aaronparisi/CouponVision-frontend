@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import DateSliderContainer from '../DateSlider/DateSliderContainer'
+import DateSliderContainer from '../../DateSlider/DateSliderContainer'
 import ActiveCouponsOverTime from './ActiveCouponsOverTime'
 import { 
   subYears, 

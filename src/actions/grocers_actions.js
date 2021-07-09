@@ -16,7 +16,6 @@ export const receiveActiveCouponsOverTime = data => {
   return {
     type: RECEIVE_ACTIVE_COUPONS_OVER_TIME,
     grocers: data.grocers,
-    brands: data.brands,
     numColors: data.numColors
   }
 }
@@ -37,12 +36,12 @@ export const getCouponCountsByBrand = () => dispatch => {
       ]
       */
       if (couponCountsByBrandData.data !== '') {
-        const addColors = {
+        const dataWithColors = {
           grocers: couponCountsByBrandData.data.grocers,
           brands: couponCountsByBrandData.data.brands,
           numColors: couponCountsByBrandData.data.brands.length  // this chart needs colors per brand
         }
-        dispatch(receiveCouponsByBrand(addColors))
+        dispatch(receiveCouponsByBrand(dataWithColors))
       }
       return couponCountsByBrandData
     },
@@ -70,11 +69,11 @@ export const getActiveCouponsOverTime = () => dispatch => {
       ]
       */
       if (activeCouponsOverTimeData.data !== '') {
-        const addColors = {
+        const dataWithColors = {
           grocers: activeCouponsOverTimeData.data.grocers,
           numColors: activeCouponsOverTimeData.data.grocers.length  // this one needs colors per grocer
         }
-        dispatch(receiveActiveCouponsOverTime(addColors))
+        dispatch(receiveActiveCouponsOverTime(dataWithColors))
       }
       return activeCouponsOverTimeData
     },

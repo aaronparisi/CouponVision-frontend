@@ -8,7 +8,7 @@ import {
   axisBottom
 } from 'd3'
 
-import useResizeObserver from '../../helpers/useResizeObserver'
+import useResizeObserver from '../../../helpers/useResizeObserver'
 
 const getDate = dateString => {
   const date = dateString.split("-")

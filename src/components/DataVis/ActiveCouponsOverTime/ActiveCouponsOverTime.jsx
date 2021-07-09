@@ -12,7 +12,7 @@ import {
   addMonths
 } from 'date-fns'
 
-import useResizeObserver from '../../helpers/useResizeObserver'
+import useResizeObserver from '../../../helpers/useResizeObserver'
 
 const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
   const svgRef = useRef()
@@ -20,6 +20,7 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
   const wrapperContentRect = useResizeObserver(wrapperRef)
 
   const [selectedGrocers, setSelectedGrocers] = useState({})
+  const [hoverColor, setHoverColor] = useState(null)
 
   const couponIsActive = (coupon, aDate) => {
     return (
@@ -138,7 +139,15 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
         return genLine(val.pairs)
       })
       .attr("fill", "none")
-      .attr("stroke", (val, idx) => colors[val.grocer.name])
+      .attr("stroke", (val, idx) => {
+        const color = colors[val.grocer.name]
+        const fadedColor = color + "33"
+        if (!hoverColor || color === hoverColor) {
+          return color
+        } else {
+          return fadedColor
+        }
+      })
       .attr("stroke-width", "2")
       .attr("class", "line")
 
@@ -153,7 +162,13 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
         .join("circle")
         .attr("class", "data-point")
         .attr("fill", point => {
-          return colors[point.grocerName]
+          const color = colors[point.grocerName]
+          const fadedColor = color + "33"
+          if (!hoverColor || color === hoverColor) {
+            return color
+          } else {
+            return fadedColor
+          }
         })
         .attr("stroke", "none")
         .attr("cx", point => xScale(point.date))
@@ -199,7 +214,8 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
     wrapperContentRect, 
     curDate, 
     colors, 
-    Object.values(selectedGrocers).filter(checked => checked).length
+    Object.values(selectedGrocers).filter(checked => checked).length,
+    hoverColor
   ])
   // atodo dependency array has ARRAYs in it (grocers, selected grocers)
   //  => how to test array equality?
@@ -219,6 +235,13 @@ const CouponLineChart = ({ grocers, minDate, maxDate, curDate, colors }) => {
               className="grocer-checkbox" 
               key={idx} 
               id={`grocer-checkbox-${removeApostrophe(grocer_name)}`}
+              data-grocer-name={grocer_name}
+              onMouseEnter={e => {
+                setHoverColor(colors[e.currentTarget.innerText])
+              }}
+              onMouseLeave={e => {
+                setHoverColor(null)
+              }}
             >
               <input 
                 type="checkbox" 

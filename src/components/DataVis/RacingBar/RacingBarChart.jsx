@@ -7,7 +7,7 @@ import {
   axisBottom
 } from 'd3'
 
-import useResizeObserver from '../../helpers/useResizeObserver'
+import useResizeObserver from '../../../helpers/useResizeObserver'
 
 const RacingBarChart = ({ data }) => {
   const svgRef = useRef()

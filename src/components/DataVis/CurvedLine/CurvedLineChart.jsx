@@ -8,7 +8,7 @@ import {
   scaleLinear
 } from 'd3'
 
-import useResizeObserver from '../../helpers/useResizeObserver'
+import useResizeObserver from '../../../helpers/useResizeObserver'
 
 const CurvedLineChart = ({ data, maxData }) => {
   const svgRef = useRef()

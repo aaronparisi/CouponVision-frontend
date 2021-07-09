@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getActiveCouponsOverTime } from '../../actions/grocers_actions'
+import { getActiveCouponsOverTime } from '../../../actions/grocers_actions'
 import ActiveCouponsOverTimeWrapper from './ActiveCouponsOverTimeWrapper'
 
 const mapStateToProps = (state, ownProps) => {

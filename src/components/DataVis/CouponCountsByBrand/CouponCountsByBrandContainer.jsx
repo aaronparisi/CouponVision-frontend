@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getCouponCountsByBrand } from '../../actions/grocers_actions'
+import { getCouponCountsByBrand } from '../../../actions/grocers_actions'
 import CouponCountsByBrandWrapper from './CouponCountsByBrandWrapper'
 
 const mapStateToProps = (state, ownProps) => {

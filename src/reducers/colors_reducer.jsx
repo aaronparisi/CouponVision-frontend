@@ -15,10 +15,13 @@ const genColors = (names, numColors) => {
   // ensuring "sufficienty" differentiation in colors
   // atodo no need for numColors anymore
   const colors = distinctColors({ count: numColors }).map(color => color.hex())
-  
-  names.forEach((name, idx) => colors[name] = colors[idx])
 
-  return colors
+  return names.reduce((ret, name, idx) => {
+    return {
+      ...ret,
+      [name]: colors[idx]
+    }
+  }, {})
 }
 
 const colorsReducer = (state = _nullColors, action) => {

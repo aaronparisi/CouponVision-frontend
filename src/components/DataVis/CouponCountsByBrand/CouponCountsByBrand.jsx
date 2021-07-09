@@ -10,7 +10,7 @@ import {
   stackOrderAscending
 } from 'd3'
 
-import useResizeObserver from '../../helpers/useResizeObserver'
+import useResizeObserver from '../../../helpers/useResizeObserver'
 
 const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
   const svgRef = useRef()

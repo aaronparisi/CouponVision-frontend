@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import RacingBarChart from './RacingBarChart'
-import useInterval from '../../helpers/useInterval'
+import useInterval from '../../../helpers/useInterval'
 
 const getRandomIndex = array => {
   return Math.floor(array.length * Math.random())

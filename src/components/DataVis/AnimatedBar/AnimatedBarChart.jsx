@@ -7,7 +7,7 @@ import {
   scaleBand
 } from 'd3'
 
-import useResizeObserver from '../../helpers/useResizeObserver'
+import useResizeObserver from '../../../helpers/useResizeObserver'
 
 const AnimatedBarChart = ({ data, maxData }) => {
   const svgRef = useRef()

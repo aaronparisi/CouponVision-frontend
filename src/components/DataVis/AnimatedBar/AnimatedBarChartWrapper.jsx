@@ -1,6 +1,6 @@
 import React from 'react'
 import AnimatedBarChart from './AnimatedBarChart'
-import RandArrayWrapper from './RandArrayWrapper'
+import RandArrayWrapper from '../RandArrayWrapper'
 
 const AnimatedBarChartWrapper = () => {
   return (
