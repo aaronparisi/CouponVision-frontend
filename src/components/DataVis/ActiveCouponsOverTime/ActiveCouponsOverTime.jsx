@@ -15,7 +15,7 @@ import {
 import useResizeObserver from '../../../helpers/useResizeObserver'
 import Legend from './Legend'
 
-const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
+const CouponLineChart = ({ grocers, earlyDate, lateDate, minScaleDate, maxScaleDate, colors }) => {
   const svgRef = useRef()
   const wrapperRef = useRef()
   const wrapperContentRect = useResizeObserver(wrapperRef)
@@ -115,7 +115,7 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
 
     // anote another possibility - make x-scale fixed
     const xScale = scaleTime()
-      .domain([earlyDate, lateDate])
+      .domain([minScaleDate, maxScaleDate])
       .range([0, width])
 
     const yAxis = axisLeft(yScale)
@@ -211,6 +211,8 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
     wrapperContentRect,
     earlyDate,
     lateDate,
+    minScaleDate,
+    maxScaleDate,
     colors,
     Object.values(selectedGrocers).filter(checked => checked).length,
     hoverColor

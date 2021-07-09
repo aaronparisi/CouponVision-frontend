@@ -14,6 +14,8 @@ const ActiveCouponsOverTimeWrapper = ({
   colors,
   getActiveCouponsOverTime
 }) => {
+  const [zoomMode, setZoomMode] = useState(true)
+
   const minDate = subYears(startOfToday(), 2)
   const maxDate = addYears(startOfToday(), 2)
 
@@ -30,11 +32,18 @@ const ActiveCouponsOverTimeWrapper = ({
   return (
     <div className="active-over-time data-vis">
       <h1>Non-Expired Coupons Over Time</h1>
+      <button
+        onClick={e => setZoomMode(!zoomMode)}
+      >
+        Zoom Mode: {(zoomMode) ? "On" : "Off"}
+      </button>
       <br />
       <ActiveCouponsOverTime 
         grocers={grocers} 
         earlyDate={earlyDate} 
         lateDate={lateDate} 
+        minScaleDate={(zoomMode) ? earlyDate : minDate} 
+        maxScaleDate={(zoomMode) ? lateDate : maxDate} 
         colors={colors} 
       />
       <div className="data-buttons">
