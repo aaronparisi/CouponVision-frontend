@@ -201,7 +201,12 @@ const CouponLineChart = ({
             })
             .attr("class", "active-counts-tooltip")
             .text(`${toolTipName}: ${toolTipNum} (${toolTipDate.toDateString()})`)
-            .attr("x", xScale(toolTipDate))
+            .attr("x", () => {
+              const initVal = xScale(toolTipDate)
+              const overflow = Math.max(0, initVal + 200 - width)
+              console.log(overflow)
+              return initVal - overflow
+            })
             .transition()
             .attr("y", yScale(toolTipNum) - 25)
             .attr("opacity", 1)
