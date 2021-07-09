@@ -129,8 +129,16 @@ nav {
     border: 1px solid #bbbbbb; }
     .active-over-time .legend .grocer-checkbox:hover {
       background-color: #bbbbbb; }
-    .active-over-time .legend .grocer-checkbox input[type="checkbox"] {
-      flex-basis: 10%; }
+    .active-over-time .legend .grocer-checkbox .checkbox {
+      flex-basis: 10%;
+      border-radius: 5px;
+      margin-right: 5%;
+      padding: 1%;
+      font-family: sans-serif;
+      color: white;
+      text-shadow: 1px 1px black; }
+      .active-over-time .legend .grocer-checkbox .checkbox:hover {
+        cursor: pointer; }
     .active-over-time .legend .grocer-checkbox label {
       height: min-content;
       flex-basis: 70%;
@@ -142,11 +150,6 @@ nav {
         text-overflow: ellipsis;
         overflow-x: hidden;
         white-space: nowrap; }
-    .active-over-time .legend .grocer-checkbox .label-color {
-      margin-left: 5%;
-      flex-basis: 10%;
-      border: 1px solid black;
-      border-radius: 5px; }
 
 .date-range-render {
   width: 100%;

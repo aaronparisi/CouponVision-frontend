@@ -221,6 +221,34 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
   ])
   // atodo dependency array has ARRAYs in it (grocers, selected grocers)
   //  => how to test array equality?
+
+  const MyCheckbox = ({ color, grocerName, checked }) => {
+    const handleClick = e => {
+      e.preventDefault()
+      
+      if (!checked) {
+        setHoverColor(color)
+      } else {
+        setHoverColor(null)
+      }
+
+      setSelectedGrocers({
+        ...selectedGrocers,
+        [grocerName]: !checked
+      })
+    }
+    
+    return (
+      <div 
+        className="checkbox"
+        id={grocerName}
+        style={{ backgroundColor: color }}
+        onClick={e => handleClick(e)}
+      >
+        { (checked) ? `\u2714` : "" }
+      </div>
+    )
+  }
   
   return <React.Fragment >
     <div className="data-wrapper" ref={wrapperRef} >
@@ -239,34 +267,24 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
               id={`grocer-checkbox-${removeApostrophe(grocer_name)}`}
               data-grocer-name={grocer_name}
               onMouseEnter={e => {
-                if (! e.currentTarget.firstElementChild.checked) return
-                setHoverColor(colors[e.currentTarget.innerText])
+                const grocerName = e.currentTarget.firstElementChild.id
+                if (selectedGrocers[grocerName]) {
+                  setHoverColor(colors[grocerName])
+                }
               }}
               onMouseLeave={e => {
                 setHoverColor(null)
               }}
             >
-              <input 
-                type="checkbox" 
-                id={`${grocer_name}`} 
-                onClick={e => {
-                  setSelectedGrocers({
-                    ...selectedGrocers,
-                    [e.currentTarget.id]: e.currentTarget.checked
-                  })
-                  
-                  if (e.currentTarget.checked) {
-                    setHoverColor(colors[e.currentTarget.parentElement.innerText])
-                  } else {
-                    setHoverColor(null)
-                  }
-                }}
-                defaultChecked={true}
+              <MyCheckbox 
+                grocerName={grocer_name} 
+                color={colors[grocer_name]}
+                checked={selectedGrocers[grocer_name]}
               />
               <label htmlFor={`${grocer_name}`}>
                 <div className="label-name">{grocer_name}</div>
               </label>
-              <div className="label-color" style={{backgroundColor: colors[grocer_name]}}></div>
+              {/* <div className="label-color" style={{backgroundColor: colors[grocer_name]}}></div> */}
             </div>
           )
         })
