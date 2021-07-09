@@ -239,6 +239,7 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
               id={`grocer-checkbox-${removeApostrophe(grocer_name)}`}
               data-grocer-name={grocer_name}
               onMouseEnter={e => {
+                if (! e.currentTarget.firstElementChild.checked) return
                 setHoverColor(colors[e.currentTarget.innerText])
               }}
               onMouseLeave={e => {
@@ -253,6 +254,12 @@ const CouponLineChart = ({ grocers, earlyDate, lateDate, colors }) => {
                     ...selectedGrocers,
                     [e.currentTarget.id]: e.currentTarget.checked
                   })
+                  
+                  if (e.currentTarget.checked) {
+                    setHoverColor(colors[e.currentTarget.parentElement.innerText])
+                  } else {
+                    setHoverColor(null)
+                  }
                 }}
                 defaultChecked={true}
               />
