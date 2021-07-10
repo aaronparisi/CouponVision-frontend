@@ -32,6 +32,7 @@ export const receiveActiveCouponsOverTime = data => {
 
 // for stacked bar
 export const getCouponCountsByBrand = () => dispatch => {
+  dispatch(receiveLoadingInfo(true))
   return grocersApiUtil.getCouponCountsByBrand()
   .then(
     couponCountsByBrandData => {
@@ -50,6 +51,7 @@ export const getCouponCountsByBrand = () => dispatch => {
           numColors: couponCountsByBrandData.data.brands.length  // this chart needs colors per brand
         }
         dispatch(receiveCouponsByBrand(dataWithColors))
+        dispatch(receiveLoadingInfo(false))
       }
       return couponCountsByBrandData
     },

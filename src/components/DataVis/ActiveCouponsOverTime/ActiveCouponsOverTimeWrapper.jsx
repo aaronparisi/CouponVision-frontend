@@ -17,8 +17,8 @@ const ActiveCouponsOverTimeWrapper = ({
 }) => {
   const [zoomMode, setZoomMode] = useState(true)
 
-  const minDate = subYears(startOfToday(), 2)
-  const maxDate = addYears(startOfToday(), 2)
+  const minDate = subYears(startOfToday(), 4)
+  const maxDate = addYears(startOfToday(), 4)
 
   const generateNewData = e => {
     e.preventDefault()

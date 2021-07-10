@@ -24,6 +24,9 @@ const NavBar = props => {
         <li className="nav-link">
           <Link to="/coupon-counts">Coupon Counts by Brand</Link>
         </li>
+        <li className="nav-link">
+          <Link to="/savings-by-brand">Savings By Brand</Link>
+        </li>
         {/* <li className="nav-link">
           <Link to="/circles">Circles</Link>
         </li> */}

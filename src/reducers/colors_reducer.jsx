@@ -3,11 +3,16 @@ import {
   RECEIVE_ACTIVE_COUPONS_OVER_TIME
 } from '../actions/grocers_actions'
 
+import {
+  RECEIVE_SAVINGS_BY_BRAND
+} from '../actions/brands_actions'
+
 import distinctColors from 'distinct-colors'
 
 const _nullColors = {
   activeCouponsOverTimeColors: {},
-  countsByBrandColors: {}
+  countsByBrandColors: {},
+  savingsByBrandColors: {}
 }
 
 const genColors = (names, numColors) => {
@@ -29,6 +34,12 @@ const colorsReducer = (state = _nullColors, action) => {
   let colors = {}
   switch(action.type) {
     // stacked bar
+    case RECEIVE_SAVINGS_BY_BRAND:
+      colors = genColors(action.brands.children.map(brand => brand.name), action.numColors)
+      return {
+        ...state,
+        savingsByBrandColors: colors
+      }
     case RECEIVE_COUPON_COUNTS_BY_BRAND:
       colors = genColors(action.brands.map(brand => brand.name), action.numColors)
       return {

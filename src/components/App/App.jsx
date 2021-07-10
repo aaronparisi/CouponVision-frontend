@@ -8,6 +8,7 @@ import RacingBarChartWrapper from '../DataVis/RacingBar/RacingBarChartWrapper';
 
 import ActiveCouponsOverTimeContainer from '../DataVis/ActiveCouponsOverTime/ActiveCouponsOverTimeContainer'
 import CouponCountsByBrandContainer from '../DataVis/CouponCountsByBrand/CouponCountsByBrandContainer'
+import SavingsByBrandContainer from '../DataVis/SavingsByBrand/SavingsByBrandContainer'
 
 // import HomeContainer from '../Home/HomeContainer';
 import NavBarContainer from '../NavBar/NavBarContainer'
@@ -27,6 +28,7 @@ const App = props => {
         <Route exact path="/racing-bar" component={RacingBarChartWrapper} />
         <Route exact path="/active-over-time" component={ActiveCouponsOverTimeContainer} />
         <Route exact path="/coupon-counts" component={CouponCountsByBrandContainer} />
+        <Route exact path="/savings-by-brand" component={SavingsByBrandContainer} />
     </React.Fragment>
   );
 }
