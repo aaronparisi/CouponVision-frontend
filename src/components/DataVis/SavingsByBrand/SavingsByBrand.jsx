@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
   hierarchy,
-  interpolateRgb,
-  scaleOrdinal,
-  schemeCategory10,
   select,
-  treemap
+  treemap,
+  scaleSequential
 } from 'd3'
 import {
   addMonths
@@ -13,6 +11,8 @@ import {
 
 import useResizeObserver from '../../../helpers/useResizeObserver'
 import { couponIsActive } from '../../../helpers/coupons_helpers'
+
+import * as d3Chromatic from 'd3-scale-chromatic'
 
 const SavingsByBrand = ({
   brands,
@@ -29,12 +29,17 @@ const SavingsByBrand = ({
       children: brands.children.map(brandObj => {
         return {
           name: brandObj.name,
-          children: brandObj.children.filter(stateObj => {
+          children: brandObj.children.map(stateObj => {
+            const activeCoupons = stateObj
+              .children
+              .filter(coupon => couponIsActive(coupon, date))
+            const totalSavings = (activeCoupons.length === 0) ? 0 :
+              activeCoupons
+                .reduce((accum, curr) => accum + curr.savings, 0)// / activeCoupons.length
+
             return {
               name: stateObj.name,
-              children: stateObj.children.map(coupon => {
-                return couponIsActive(coupon, date)
-              })
+              totalSavings: totalSavings
             }
           })
         }
@@ -56,31 +61,87 @@ const SavingsByBrand = ({
     const { width, height } = wrapperContentRect
 
     const brandsOnlyActiveCoupons = filterCoupons(new Date())
+    
     const root = hierarchy(brandsOnlyActiveCoupons)
       .sum(d => {
-        return d.savings
+        return d.totalSavings
       })
-      .sort((d1, d2) => d2.savings - d1.savings)
+      .sort((d1, d2) => d2.totalSavings - d1.totalSavings)
 
     const treemapRoot = treemap().size([width, height]).padding(1)(root)
 
-    const fader = color => interpolateRgb(color, '#fff')(0.3)
-    const colorScale = scaleOrdinal(schemeCategory10.map(fader))
-    // debugger
+    // const fader = color => interpolateRgb(color, '#fff')(0.3)
+    // const colorScale = scaleOrdinal(schemeCategory10.map(fader))
+
+    const colorScale = scaleSequential()
+    .interpolator(d3Chromatic.interpolateSinebow)
+    
+    const numBrands = brands.children.length
+    const brandColorIdxs = {}
+    brands.children.forEach((brand, idx) => {
+      brandColorIdxs[brand.name] = idx / numBrands
+    })
+    
     svg
-      .selectAll("g")
+      .selectAll(".tile")
       .data(treemapRoot.leaves())
-      .join("g")
-      .attr('transform', d => `translate(${d.x0},${d.y0})`)
-      .append('rect')
+      .join("rect")
+      // .attr('transzform', d => `translate(${d.x0},${d.y0})`)
+      .attr("class", "tile")
+      .attr('x', d => d.x0)
+      .attr('y', d => d.y0)
       .attr('width', d => d.x1 - d.x0)
       .attr('height', d => d.y1 - d.y0)
       .attr('fill', d => {
-        return colorScale(d.data.state)
+        return colorScale(brandColorIdxs[d.parent.data.name])
+      })
+      .on("mouseenter", (e, d) => {
+        svg
+          .selectAll(".total-tooltip")
+          .data([d])
+          .join("text")
+          .attr("class", "total-tooltip")
+          .attr("fill", "black")
+          .text(d => {
+            return `${d.data.name}: $${parseFloat(d.data.totalSavings).toFixed(2)}`
+          })
+          .attr("x", d => d.x0 + 5)
+          .attr("y", d => d.y0 + 12)
+          .attr("font-size", 12)
+      })
+      .on("mouseleave", () => svg.select(".total-tooltip").remove())
+      
+    // legend
+    svg
+      .selectAll(".legend-label")
+      .data(Object.keys(brandColorIdxs))
+      .join("text")
+      .attr("class", "legend-label")
+      .attr("fill", () => "black")
+      .text(d => d)
+      .attr("x", (val, i) => ((i+1) * (width / 5)) % width)
+      .attr("y", (val, i) => height + 25 + (Math.ceil((i+1) / 5)) * 25)
+      .on("mouseenter", (e, d) => {
+        // atodo
+        // how do I access the data from the treemap
+        // without iterating all through all the levels of it?
+        // goal here is to have all others fade
+        // and total savings for entire brand appear
       })
 
+    svg
+      .selectAll(".legend-checkbox")
+      .data(Object.keys(brandColorIdxs))
+      .join("circle")
+      .attr("class", "legend-checkbox")
+      .attr("cx", (val, i) => (((i+1) * (width / 5)) % width) - 15)
+      .attr("cy", (val, i) => height + 20 + (Math.ceil((i+1) / 5)) * 25)
+      .attr("r", 7)
+      .style("fill", val => {
+        return colorScale(brandColorIdxs[val])
+      })
 
-  }, [brands.length, wrapperContentRect])
+  }, [brands.children, wrapperContentRect, loading])
 
   const Loading = () => {
 
