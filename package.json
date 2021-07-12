@@ -13,6 +13,7 @@
     "axios": "^0.21.1",
     "d3": "^7.0.0",
     "d3-scale": "^4.0.0",
+    "d3-scale-chromatic": "^3.0.0",
     "date-fns": "^2.22.1",
     "distinct-colors": "^3.0.0",
     "jquery": "^3.6.0",
@@ -27,6 +28,7 @@
     "react-scripts": "4.0.3",
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
+    "rgb-hex": "^4.0.0",
     "styled-components": "^5.2.3",
     "webpack-cli": "^4.6.0"
   },

@@ -1,87 +1,16 @@
 .active-over-time {
+  & .data-buttons {
+    margin-top: 200px;
+  }
   & .loading {
     font-size: 100px;
   }
 
-  & [class*="data-point"]:hover {
+  & [class*="data-point"]:hover, 
+  & [class*="legend-label"]:hover,
+  & [class*="legend-checkbox"]:hover {
+    // fixme jenky cursor on text enter
     cursor: pointer;
-  }
-
-  & .legend-wrapper {
-    flex-basis: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 3%;
-    border: 1px solid black;
-
-    & .legend-buttons {
-      margin-top: 1%;
-    }
-
-    & .legend {
-
-      // atodo why is the height of the checkboxes so big??
-      display: flex;
-      flex-direction: row;
-      justify-content: stretch;
-      flex-wrap: wrap;
-
-      padding: 1%;
-
-      & .hovered {
-        background-color: #bbbbbb;
-      }
-
-      & .grocer-checkbox {
-        margin: 1px 5px;
-        flex-basis: 18%;
-
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: stretch;
-        height: max-content;
-        border-radius: 5px;
-
-        &:hover {
-          background-color: #bbbbbb;
-          cursor: pointer;
-        }
-
-        & .checkbox {
-          height: 20px;
-          width: 20px;
-          border-radius: 5px;
-          margin-right: 5%;
-          padding-top: 1px;
-          text-align: center;
-          font-family: sans-serif;
-          color: white;
-          text-shadow: 1px 1px black;
-
-          &:hover {
-            cursor: pointer;
-          }
-        }
-
-        & label {
-          height: min-content;
-          flex-basis: 70%;
-          display: flex;
-          flex-direction: row;
-          justify-content: stretch;
-
-          text-overflow: ellipsis;
-          overflow-x: hidden;
-          white-space: nowrap;
-          
-          &:hover {
-            cursor: pointer;
-          }
-        }
-      }
-    }
   }
 }
 
