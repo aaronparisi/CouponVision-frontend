@@ -13,9 +13,9 @@ import {
 
 import useResizeObserver from '../../../helpers/useResizeObserver'
 import * as d3Chromatic from 'd3-scale-chromatic'
-import rgbHex from 'rgb-hex'
+import { maybeFaded } from '../../../helpers/colors'
 
-const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
+const CouponCountsByBrand = ({ grocers=[], brands=[], keys }) => {
   const svgRef = useRef()
   const wrapperRef = useRef()
   const wrapperContentRect = useResizeObserver(wrapperRef)
@@ -27,10 +27,6 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
     const { width, height } = wrapperContentRect || wrapperRef.current.getBoundingClientRect()
 
     // stacks, layers
-    // ???? aren't the layers supposed to be per brand?
-    // => look at the way the grocers data is formatted
-    //    (it generates layers based off the keys for the coupon counts)
-    
     const stackGenerator = stack()
       .keys(keys)
       .order(stackOrderAscending);
@@ -52,31 +48,14 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
 
     const colorScale = scaleSequential()
       .interpolator(d3Chromatic.interpolateSinebow)
-      // .interpolator(d3Chromatic.interpolateRainbow)
-      // .interpolator(d3Chromatic.interpolateTurbo)
-    
-    const maybeFaded = color => {
-      if (color[0] === "#") {
-        if (!hoverColor || color === hoverColor) {
-          return color
-        } else {
-          return color + "22"
-        }
-      } else {
-        if (!hoverColor || color === hoverColor) {
-          return `#${rgbHex(color)}`
-        } else {
-          return `#${rgbHex(color)}` + "22"
-        }
-      }
-    }
+      // other options: interpolateRainbow, interpolateTurbo, 
 
     const getColorFromName = name => {
       return colorScale(brandColorIdxs[name])
     }
 
     const getMaybeFadedFromName = name => {
-      return maybeFaded(getColorFromName(name))
+      return maybeFaded(getColorFromName(name), hoverColor)
     }
 
     // scales & axes
@@ -101,7 +80,6 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
       .call(yAxis)
 
     // stacks
-    // debugger
     svg
       .selectAll(".layer")
       .data(layers)
@@ -147,8 +125,7 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
           .attr("y", yScale(val.data.grocer_name) - 3)
           .attr("opacity", 1)
       })
-      .on("mouseleave", (event, val) => {
-        const tgt = event.currentTarget  // the 'rect'
+      .on("mouseleave", () => {
         svg
           .select(".coupon-stacked-tooltip")
           .remove()
@@ -162,7 +139,7 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
       .attr("class", "legend-label")
       .attr("fill", "black")
       .text(brand => brand.name)
-      .attr("x", (brand, i) => width + 40)
+      .attr("x", () => width + 40)
       .attr("y", (brand, i) => 55 + (i * 22))
       .on("mouseenter", (e, label) => {
         setHoverColor(getColorFromName(label.name))
@@ -194,7 +171,7 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
         setHoverColor(null)
       })
 
-  }, [grocers, brands, colors, keys, wrapperContentRect, hoverColor])
+  }, [grocers, brands, keys, wrapperContentRect, hoverColor])
   
   return (
     <div className="counts-content" >
@@ -204,28 +181,6 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
           <g className="y-axis" />
         </svg>
       </div>
-      {/* <div className="legend">
-        <ul>
-          {
-            brands.map((brand, idx) => {
-              return <li 
-                key={idx}
-                id={idx}
-                className="legend-brand" 
-                onMouseEnter={e => {
-                  setHoverColor(colors[e.currentTarget.innerText])
-                }}
-                onMouseLeave={e => {
-                  setHoverColor(null)
-                }}
-              >
-                <div className="brand-color" style={{backgroundColor: colors[brand.name]}}></div>
-                {brand.name}
-              </li>
-            })
-          }
-        </ul>
-      </div> */}
     </div>
   )
 }

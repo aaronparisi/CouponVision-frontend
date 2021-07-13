@@ -1,14 +1,7 @@
-import * as brandsApiUtil from '../utils/brands_util'
+import * as apiUtil from '../utils/api_util'
+import { receiveLoadingInfo } from './loading_actions'
 
 export const RECEIVE_SAVINGS_BY_BRAND = 'RECEIVE_SAVINGS_BY_BRAND'
-export const RECEIVE_LOADING_INFO = 'RECEIVE_LOADING_INFO'
-
-export const receiveLoadingInfo = loading => {
-  return {
-    type: RECEIVE_LOADING_INFO,
-    loading: loading
-  }
-}
 
 export const receiveSavingsByBrand = data => {
   return {
@@ -23,7 +16,7 @@ export const receiveSavingsByBrand = data => {
 
 export const getSavingsByBrand = () => dispatch => {
   dispatch(receiveLoadingInfo(true))
-  return brandsApiUtil.getSavingsByBrand()
+  return apiUtil.getSavingsByBrand()
   .then(
     savingsByBrandData => {
       /*

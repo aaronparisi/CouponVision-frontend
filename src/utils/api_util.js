@@ -13,3 +13,10 @@ export const getActiveCouponsOverTime = () => {
     url: '/api/active_coupons_over_time',
   })
 }
+
+export const getSavingsByBrand = () => {
+  return axiosIns({
+    method: 'get',
+    url: '/api/savings_by_brand',
+  })
+}

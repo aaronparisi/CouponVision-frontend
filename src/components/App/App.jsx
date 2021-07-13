@@ -2,18 +2,17 @@ import React from 'react';
 import { Route } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
+import NavBarContainer from '../NavBar/NavBarContainer'
+import Description from '../Description/Description'
+
 import AnimatedBarChartWrapper from '../DataVis/AnimatedBar/AnimatedBarChartWrapper';
 import BreakingBadTimelineWrapper from '../DataVis/BreakingBad/BreakingBadTimelineWrapper';
 import RacingBarChartWrapper from '../DataVis/RacingBar/RacingBarChartWrapper';
+import CurvedLineChartWrapper from '../DataVis/CurvedLine/CurvedLineChartWrapper';
 
 import ActiveCouponsOverTimeContainer from '../DataVis/ActiveCouponsOverTime/ActiveCouponsOverTimeContainer'
 import CouponCountsByBrandContainer from '../DataVis/CouponCountsByBrand/CouponCountsByBrandContainer'
 import SavingsByBrandContainer from '../DataVis/SavingsByBrand/SavingsByBrandContainer'
-
-// import HomeContainer from '../Home/HomeContainer';
-import NavBarContainer from '../NavBar/NavBarContainer'
-import Description from '../Description/Description'
-import CurvedLineChartWrapper from '../DataVis/CurvedLine/CurvedLineChartWrapper';
 
 const App = props => {
 

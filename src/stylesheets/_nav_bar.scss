@@ -8,15 +8,17 @@ nav {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    text-align: center;
   
-    & .nav-link {    
+    & .nav-link {
+      &:hover {
+        background-color: #cccccc;
+      }
+      
       a {
         padding: 10px;
         text-decoration: none;
-  
-        &:hover {
-          background-color: #cccccc;
-        }
+        text-align: center;
       }
     }
   }

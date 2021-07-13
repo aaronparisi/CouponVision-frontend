@@ -1,10 +1,17 @@
-export const randColor = () => {
-  return '#'+Math.floor(Math.random()*16777215).toString(16)
-}
+import rgbHex from 'rgb-hex'
 
-export const randColors = (length) => {
-  return Array.from(
-    { length: length },
-    () => randColor()
-  )
+export const maybeFaded = (color, hoverColor) => {
+  if (color[0] === "#") {
+    if (!hoverColor || color === hoverColor) {
+      return color
+    } else {
+      return color + "22"
+    }
+  } else {
+    if (!hoverColor || color === hoverColor) {
+      return `#${rgbHex(color)}`
+    } else {
+      return `#${rgbHex(color)}` + "22"
+    }
+  }
 }

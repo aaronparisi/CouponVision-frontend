@@ -1,13 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import {
   hierarchy,
   select,
   treemap,
   scaleSequential
 } from 'd3'
-import {
-  addMonths
-} from 'date-fns'
 
 import useResizeObserver from '../../../helpers/useResizeObserver'
 import { couponIsActive } from '../../../helpers/coupons_helpers'
@@ -16,7 +13,6 @@ import * as d3Chromatic from 'd3-scale-chromatic'
 
 const SavingsByBrand = ({
   brands,
-  colors,
   loading,
 }) => {
   const svgRef = useRef()
@@ -35,7 +31,7 @@ const SavingsByBrand = ({
               .filter(coupon => couponIsActive(coupon, date))
             const totalSavings = (activeCoupons.length === 0) ? 0 :
               activeCoupons
-                .reduce((accum, curr) => accum + curr.savings, 0)// / activeCoupons.length
+                .reduce((accum, curr) => accum + curr.savings, 0)
 
             return {
               name: stateObj.name,
@@ -60,7 +56,7 @@ const SavingsByBrand = ({
 
     const { width, height } = wrapperContentRect
 
-    const brandsOnlyActiveCoupons = filterCoupons(new Date())
+    const brandsOnlyActiveCoupons = filterCoupons(new Date())  // will always show data for 'today'
     
     const root = hierarchy(brandsOnlyActiveCoupons)
       .sum(d => {
@@ -69,9 +65,6 @@ const SavingsByBrand = ({
       .sort((d1, d2) => d2.totalSavings - d1.totalSavings)
 
     const treemapRoot = treemap().size([width, height]).padding(1)(root)
-
-    // const fader = color => interpolateRgb(color, '#fff')(0.3)
-    // const colorScale = scaleOrdinal(schemeCategory10.map(fader))
 
     const colorScale = scaleSequential()
     .interpolator(d3Chromatic.interpolateSinebow)
@@ -86,7 +79,6 @@ const SavingsByBrand = ({
       .selectAll(".tile")
       .data(treemapRoot.leaves())
       .join("rect")
-      // .attr('transzform', d => `translate(${d.x0},${d.y0})`)
       .attr("class", "tile")
       .attr('x', d => d.x0)
       .attr('y', d => d.y0)

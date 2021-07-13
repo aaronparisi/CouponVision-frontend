@@ -1,6 +1,6 @@
 import {
   RECEIVE_SAVINGS_BY_BRAND
-} from '../actions/brands_actions'
+} from '../actions/savings_by_brand_actions'
 
 const _nullBrands = {}
 

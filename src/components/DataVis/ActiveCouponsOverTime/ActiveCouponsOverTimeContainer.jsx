@@ -1,13 +1,12 @@
 import { connect } from 'react-redux'
-import { getActiveCouponsOverTime } from '../../../actions/grocers_actions'
+import { getActiveCouponsOverTime } from '../../../actions/active_coupons_over_time_actions'
 import ActiveCouponsOverTimeWrapper from './ActiveCouponsOverTimeWrapper'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    grocers: state.activeCouponsOverTime,
-    earlyDate: state.date[0],
-    lateDate: state.date[1],
-    colors: state.colors.activeCouponsOverTimeColors,
+    grocers: state.activeCouponsOverTime.grocers,
+    earlyDate: state.activeCouponsOverTime.earlyDate,
+    lateDate: state.activeCouponsOverTime.lateDate,
     loading: state.loading
   }
 }

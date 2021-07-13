@@ -19,7 +19,7 @@ const NavBar = props => {
           <Link to="/breaking-bad">Breaking Bad</Link>
         </li>
         <li className="nav-link">
-          <Link to="/active-over-time">Coupons over Time</Link>
+          <Link to="/active-over-time">Active Coupons Over Time</Link>
         </li>
         <li className="nav-link">
           <Link to="/coupon-counts">Coupon Counts by Brand</Link>

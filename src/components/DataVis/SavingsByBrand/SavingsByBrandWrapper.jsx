@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import SavingsByBrand from './SavingsByBrand'
 
 const SavingsByBrandWrapper = ({ 
   brands,
-  colors,
   loading,
   getSavingsByBrand
 }) => {
@@ -18,17 +17,9 @@ const SavingsByBrandWrapper = ({
       <br />
       <SavingsByBrand
         brands={brands}
-        colors={colors}
         loading={loading}
       />
-      {/* <div className="data-buttons">
-        <DateSliderContainer minDate={minDate} maxDate={maxDate} />
-        <button
-          onClick={e => generateNewData(e)}
-        >
-          Generate New Data
-        </button>
-      </div> */}
+      {/* atodo date slider here? */}
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import {
   RECEIVE_LOADING_INFO
-} from '../actions/grocers_actions'
+} from '../actions/loading_actions'
 
 const _nullLoading = false
 

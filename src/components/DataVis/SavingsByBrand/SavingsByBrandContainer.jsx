@@ -1,13 +1,12 @@
 import { connect } from 'react-redux'
-import { getSavingsByBrand } from '../../../actions/brands_actions'
+import { getSavingsByBrand } from '../../../actions/savings_by_brand_actions'
 import SavingsByBrandWrapper from './SavingsByBrandWrapper'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     brands: state.savingsByBrand,
-    // earlyDate: state.date[0],
-    // lateDate: state.date[1],
-    colors: state.colors.savingsByBrandColors,
+    // earlyDate: state.earlyDate,
+    // lateDate: state.lateDate,
     loading: state.loading
   }
 }

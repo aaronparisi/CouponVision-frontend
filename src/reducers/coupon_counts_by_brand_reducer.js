@@ -1,6 +1,6 @@
 import {
   RECEIVE_COUPON_COUNTS_BY_BRAND,
-} from '../actions/grocers_actions'
+} from '../actions/coupon_counts_by_brand_actions'
 
 const _nullGrocers = {
   grocers: [],

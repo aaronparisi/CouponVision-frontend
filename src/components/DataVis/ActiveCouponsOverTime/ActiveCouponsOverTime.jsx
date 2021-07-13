@@ -11,14 +11,14 @@ import {
 } from 'd3'
 
 import * as d3Chromatic from 'd3-scale-chromatic'
-import rgbHex from 'rgb-hex'
+import { maybeFaded } from '../../../helpers/colors'
 
 import {
   addMonths
 } from 'date-fns'
 
 import useResizeObserver from '../../../helpers/useResizeObserver'
-import Legend from './Legend'
+// import Legend from './Legend'
 import { couponIsActive } from '../../../helpers/coupons_helpers'
 
 const CouponLineChart = ({ 
@@ -114,33 +114,16 @@ const CouponLineChart = ({
       grocerColorIdxs[line.grocer.name] = idx / numLines
     })
 
+    // atodo abstract more color stuff?
     const colorScale = scaleSequential()
       .interpolator(d3Chromatic.interpolateSinebow)
-      // .interpolator(d3Chromatic.interpolateRainbow)
-      // .interpolator(d3Chromatic.interpolateTurbo)
-    
-    const maybeFaded = color => {
-      if (color[0] === "#") {
-        if (!hoverColor || color === hoverColor) {
-          return color
-        } else {
-          return color + "22"
-        }
-      } else {
-        if (!hoverColor || color === hoverColor) {
-          return `#${rgbHex(color)}`
-        } else {
-          return `#${rgbHex(color)}` + "22"
-        }
-      }
-    }
 
     const getColorFromName = name => {
       return colorScale(grocerColorIdxs[name])
     }
 
     const getMaybeFadedFromName = name => {
-      return maybeFaded(getColorFromName(name))
+      return maybeFaded(getColorFromName(name), hoverColor)
     }
     
     const yScale = scaleLinear()  // from 0 to the highest coupon count
@@ -256,7 +239,6 @@ const CouponLineChart = ({
       .on("mouseenter", (event, label) => {
         const curName = label.grocer.name
         if (selectedGrocers[curName]) {
-          // setHoverColor(colors[curName])
           setHoverColor(getColorFromName(curName))
         }
       })
@@ -319,7 +301,6 @@ const CouponLineChart = ({
     lateDate,
     minScaleDate,
     maxScaleDate,
-    colors,
     Object.values(selectedGrocers).filter(checked => checked).length,
     hoverColor
   ])

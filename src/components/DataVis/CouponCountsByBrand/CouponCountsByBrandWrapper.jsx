@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import CouponCountsByBrand from './CouponCountsByBrand'
 import { 
 
@@ -7,22 +7,12 @@ import {
 const CouponCountsByBrandWrapper = ({
   grocers,
   brands,
-  colors,
   getCouponCountsByBrand
 }) => {
-  const generateNewData = e => {
-    e.preventDefault()
-
-    console.log("... generate new data now ...")
-  }
 
   useEffect(() => {
     getCouponCountsByBrand()
   }, [])
-
-  // useEffect(() => {
-  //   setColors(randColors(brands.length))
-  // }, [brands.length])  // ! this is hacky
   
   return (
     <div className="counts-by-brand data-vis" >
@@ -32,14 +22,9 @@ const CouponCountsByBrandWrapper = ({
         grocers={grocers} 
         brands={brands} 
         keys={brands.map(brand => brand.id)}
-        colors={colors} 
       />
       <div className="data-buttons">
-        {/* <button
-          onClick={e => generateNewData(e)}
-        >
-          Generate New Data
-        </button> */}
+        {/* <button onClick={e => generateNewData(e)} >Generate New Data</button> */}
       </div>
     </div>
   )

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { receiveDateRange } from '../../actions/date_actions'
+import { receiveDateRange } from '../../actions/active_coupons_over_time_actions'
 import DateSlider from './DateSlider'
 
 const mapStateToProps = (state, ownProps) => {
