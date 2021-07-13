@@ -6,6 +6,36 @@ Murat Kemalder's [Using React (Hooks) with D3](https://dev.to/muratkemaldar/vide
 Steve Hall's [React Compact Slider](https://codesandbox.io/s/rw97j317p)
 data.world's [Grocery Store Data](https://data.world/usda/grocery-stores)
 
+..........................................
+
+My notes:
+
+- app config
+
+/////////////////////////////////////////////////////
+
+- reducer structure / decisions
+
+/////////////////////////////////////////////////////
+
+- actions / api calls
+
+/////////////////////////////////////////////////////
+
+- active coupons over time
+
+/////////////////////////////////////////////////////
+
+- coupon counts by brand
+
+/////////////////////////////////////////////////////
+
+- savings by brand
+
+/////////////////////////////////////////////////////
+
+..........................................
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Available Scripts
