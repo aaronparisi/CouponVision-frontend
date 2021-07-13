@@ -30,6 +30,7 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys, colors={} }) => {
     // ???? aren't the layers supposed to be per brand?
     // => look at the way the grocers data is formatted
     //    (it generates layers based off the keys for the coupon counts)
+    
     const stackGenerator = stack()
       .keys(keys)
       .order(stackOrderAscending);

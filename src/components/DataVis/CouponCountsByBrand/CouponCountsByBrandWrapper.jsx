@@ -17,8 +17,8 @@ const CouponCountsByBrandWrapper = ({
   }
 
   useEffect(() => {
-    if (grocers.length === 0) getCouponCountsByBrand()
-  }, [getCouponCountsByBrand])
+    getCouponCountsByBrand()
+  }, [])
 
   // useEffect(() => {
   //   setColors(randColors(brands.length))

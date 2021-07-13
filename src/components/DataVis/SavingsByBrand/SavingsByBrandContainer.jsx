@@ -4,7 +4,7 @@ import SavingsByBrandWrapper from './SavingsByBrandWrapper'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    brands: state.brands,
+    brands: state.savingsByBrand,
     // earlyDate: state.date[0],
     // lateDate: state.date[1],
     colors: state.colors.savingsByBrandColors,

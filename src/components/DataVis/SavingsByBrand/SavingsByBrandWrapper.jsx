@@ -9,7 +9,7 @@ const SavingsByBrandWrapper = ({
 }) => {
 
   useEffect(() => {
-    if (brands.length === 0) getSavingsByBrand()
+    getSavingsByBrand()
   }, [])
 
   return (

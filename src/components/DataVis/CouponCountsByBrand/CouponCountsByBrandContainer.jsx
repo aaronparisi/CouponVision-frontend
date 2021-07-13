@@ -4,8 +4,8 @@ import CouponCountsByBrandWrapper from './CouponCountsByBrandWrapper'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    grocers: state.couponCountsByBrand,
-    brands: state.brands,
+    grocers: state.couponCountsByBrand.grocers,
+    brands: state.couponCountsByBrand.brands,
     colors: state.colors.countsByBrandColors
   }
 }
