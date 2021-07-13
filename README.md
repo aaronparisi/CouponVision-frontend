@@ -6,9 +6,7 @@ Murat Kemalder's [Using React (Hooks) with D3](https://dev.to/muratkemaldar/vide
 Steve Hall's [React Compact Slider](https://codesandbox.io/s/rw97j317p)
 data.world's [Grocery Store Data](https://data.world/usda/grocery-stores)
 
-/////////////////////////////////////////////////////
-
-My notes:
+## My notes:
 
 - app config
 
@@ -31,8 +29,6 @@ My notes:
 /////////////////////////////////////////////////////
 
 - savings by brand
-
-/////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////
 
