@@ -25,12 +25,17 @@ nav {
     flex-direction: row;
     justify-content: center;
     text-align: center; }
-    nav .nav-links .nav-link:hover {
-      background-color: #cccccc; }
-    nav .nav-links .nav-link a {
-      padding: 10px;
-      text-decoration: none;
-      text-align: center; }
+    nav .nav-links .nav-link {
+      display: flex;
+      align-items: center; }
+      nav .nav-links .nav-link:hover {
+        background-color: #eeeeee; }
+      nav .nav-links .nav-link a {
+        padding: 10px;
+        text-decoration: none;
+        text-align: center; }
+  nav #selected-nav-link {
+    background-color: #d8fbfd; }
 
 .description {
   padding: 5% 10%; }

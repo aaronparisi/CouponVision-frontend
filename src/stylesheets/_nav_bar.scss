@@ -11,8 +11,10 @@ nav {
     text-align: center;
   
     & .nav-link {
+      display: flex;
+      align-items: center;
       &:hover {
-        background-color: #cccccc;
+        background-color: #eeeeee;
       }
       
       a {
@@ -21,5 +23,9 @@ nav {
         text-align: center;
       }
     }
+  }
+
+  #selected-nav-link {
+    background-color: rgb(216, 251, 253);
   }
 }
