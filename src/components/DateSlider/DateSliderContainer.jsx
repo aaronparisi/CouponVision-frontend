@@ -1,17 +1,18 @@
 import { connect } from 'react-redux'
-import { receiveDateRange } from '../../actions/active_coupons_over_time_actions'
 import DateSlider from './DateSlider'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     minDate: ownProps.minDate,
-    maxDate: ownProps.maxDate
+    maxDate: ownProps.maxDate,
+    mode: ownProps.mode,
+    values: ownProps.values
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    receiveDateRange: date => dispatch(receiveDateRange(date))
+    dateReceivedCallback: date => dispatch(ownProps.dateReceivedCallback(date))
   }
 }
 

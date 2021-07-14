@@ -124,6 +124,11 @@ nav {
   .date-range-render div {
     margin: 5px; }
 
+.savings-by-brand .data-wrapper {
+  border: 1px solid #aaaaaa; }
+.savings-by-brand .data-buttons {
+  margin-top: 200px; }
+
 #root, body, html {
   height: 100%;
   width: 100%; }

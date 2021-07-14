@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   hierarchy,
   select,
@@ -10,14 +10,21 @@ import useResizeObserver from '../../../helpers/useResizeObserver'
 import { couponIsActive } from '../../../helpers/coupons_helpers'
 
 import * as d3Chromatic from 'd3-scale-chromatic'
+import { maybeFaded } from '../../../helpers/colors'
+
+import tinyColor from 'tinycolor2'
+import rgbHex from 'rgb-hex'
 
 const SavingsByBrand = ({
   brands,
   loading,
+  curDate
 }) => {
   const svgRef = useRef()
   const wrapperRef = useRef()
   const wrapperContentRect = useResizeObserver(wrapperRef)
+
+  const [hoverColor, setHoverColor] = useState(null)
 
   const filterCoupons = date => {
     const ret = {
@@ -31,7 +38,7 @@ const SavingsByBrand = ({
               .filter(coupon => couponIsActive(coupon, date))
             const totalSavings = (activeCoupons.length === 0) ? 0 :
               activeCoupons
-                .reduce((accum, curr) => accum + curr.savings, 0)
+                .reduce((accum, curr) => parseFloat(accum) + parseFloat(curr.savings), 0)
 
             return {
               name: stateObj.name,
@@ -56,7 +63,8 @@ const SavingsByBrand = ({
 
     const { width, height } = wrapperContentRect
 
-    const brandsOnlyActiveCoupons = filterCoupons(new Date())  // will always show data for 'today'
+    const brandsOnlyActiveCoupons = filterCoupons(curDate)
+    // const brandsOnlyActiveCoupons = filterCoupons(new Date())  // will always show data for 'today'
     
     const root = hierarchy(brandsOnlyActiveCoupons)
       .sum(d => {
@@ -67,13 +75,22 @@ const SavingsByBrand = ({
     const treemapRoot = treemap().size([width, height]).padding(1)(root)
 
     const colorScale = scaleSequential()
-    .interpolator(d3Chromatic.interpolateSinebow)
-    
+    // .interpolator(d3Chromatic.interpolateSinebow)
+    .interpolator(d3Chromatic.interpolateTurbo)
+
     const numBrands = brands.children.length
     const brandColorIdxs = {}
     brands.children.forEach((brand, idx) => {
       brandColorIdxs[brand.name] = idx / numBrands
     })
+
+    const getColorFromName = name => {
+      return colorScale(brandColorIdxs[name])
+    }
+
+    const getMaybeFadedFromName = name => {
+      return maybeFaded(getColorFromName(name), hoverColor)
+    }
     
     svg
       .selectAll(".tile")
@@ -85,7 +102,8 @@ const SavingsByBrand = ({
       .attr('width', d => d.x1 - d.x0)
       .attr('height', d => d.y1 - d.y0)
       .attr('fill', d => {
-        return colorScale(brandColorIdxs[d.parent.data.name])
+        const curBrand = d.parent.data.name
+        return getMaybeFadedFromName(curBrand)
       })
       .on("mouseenter", (e, d) => {
         svg
@@ -93,7 +111,11 @@ const SavingsByBrand = ({
           .data([d])
           .join("text")
           .attr("class", "total-tooltip")
-          .attr("fill", "black")
+          .attr("fill", d => {
+            const color = `#${rgbHex(getColorFromName(d.parent.data.name))}`
+            const tColor = tinyColor(color)
+            return (tColor.isDark()) ? "white" : "black"
+          })
           .text(d => {
             return `${d.data.name}: $${parseFloat(d.data.totalSavings).toFixed(2)}`
           })
@@ -106,34 +128,59 @@ const SavingsByBrand = ({
     // legend
     svg
       .selectAll(".legend-label")
-      .data(Object.keys(brandColorIdxs))
+      .data(treemapRoot.children)
       .join("text")
       .attr("class", "legend-label")
       .attr("fill", () => "black")
-      .text(d => d)
+      .text(child => {
+        return child.data.name
+      })
       .attr("x", (val, i) => ((i+1) * (width / 5)) % width)
-      .attr("y", (val, i) => height + 25 + (Math.ceil((i+1) / 5)) * 25)
-      .on("mouseenter", (e, d) => {
-        // atodo
-        // how do I access the data from the treemap
-        // without iterating all through all the levels of it?
-        // goal here is to have all others fade
-        // and total savings for entire brand appear
+      .attr("y", (val, i) => height + 25 + (Math.ceil((i+1) / 5)) * 30)
+      .on("mouseenter", (e, child) => {
+        setHoverColor(getColorFromName(child.data.name))
+
+        svg
+          .selectAll(".legend-tooltip")
+          .data([child])
+          .join("text")
+          .attr("class", "legend-tooltip")
+          .attr("fill", "black")
+          .text(child => {
+            const tot = child.data.children.reduce((tot, coupon) => {
+              return parseFloat(tot) + parseFloat(coupon.totalSavings)
+            }, 0).toFixed(2)
+            return `Total Savings for ${child.data.name}:` + `$${tot}`
+          })
+          .attr("x", child => {
+            return child.x0 - (Math.max(0, child.x1 + 200 - width))
+          })
+          .attr("y", child => {
+            return child.y0 - 10
+          })
+          
+      })
+      .on("mouseleave", () => {
+        setHoverColor(null)
+
+        svg
+          .selectAll(".legend-tooltip").remove()
       })
 
     svg
       .selectAll(".legend-checkbox")
       .data(Object.keys(brandColorIdxs))
-      .join("circle")
+      .join("rect")
       .attr("class", "legend-checkbox")
-      .attr("cx", (val, i) => (((i+1) * (width / 5)) % width) - 15)
-      .attr("cy", (val, i) => height + 20 + (Math.ceil((i+1) / 5)) * 25)
-      .attr("r", 7)
+      .attr("x", (val, i) => (((i+1) * (width / 5)) % width) - 30)
+      .attr("y", (val, i) => height + 20 + (Math.ceil((i+1) / 5)) * 30 - 15)  // atodo abstract these
+      .attr("height", 25)
+      .attr("width", 25)
       .style("fill", val => {
         return colorScale(brandColorIdxs[val])
       })
 
-  }, [brands.children, wrapperContentRect, loading])
+  }, [brands.children, wrapperContentRect, loading, hoverColor, curDate])
 
   const Loading = () => {
 

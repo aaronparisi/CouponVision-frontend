@@ -174,8 +174,8 @@ const CouponLineChart = ({
 
     // datapoints
     const pointsWithGrocerName = visibleLines.reduce((ret, line) => {
-      // collects just the pair objects consisting of
-      // date, numActive, and grocerName
+      // collects all the lines' pair objects,
+      // adding grocerName
       return ret.concat(line.pairs)
     }, [])
 

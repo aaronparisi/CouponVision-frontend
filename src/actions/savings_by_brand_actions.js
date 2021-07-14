@@ -2,6 +2,14 @@ import * as apiUtil from '../utils/api_util'
 import { receiveLoadingInfo } from './loading_actions'
 
 export const RECEIVE_SAVINGS_BY_BRAND = 'RECEIVE_SAVINGS_BY_BRAND'
+export const RECEIVE_DATE = 'RECEIVE_DATE'
+
+export const receiveDate = data => {
+  return {
+    type: RECEIVE_DATE,
+    date: data[0]  // atodo maybe modify the values structure in DateSlider?
+  }
+}
 
 export const receiveSavingsByBrand = data => {
   return {

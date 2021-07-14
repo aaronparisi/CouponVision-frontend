@@ -15,7 +15,6 @@
     "d3-scale": "^4.0.0",
     "d3-scale-chromatic": "^3.0.0",
     "date-fns": "^2.22.1",
-    "distinct-colors": "^3.0.0",
     "jquery": "^3.6.0",
     "react": "^17.0.2",
     "react-compound-slider": "^3.3.1",
@@ -30,6 +29,7 @@
     "redux-logger": "^3.0.6",
     "rgb-hex": "^4.0.0",
     "styled-components": "^5.2.3",
+    "tinycolor2": "^1.4.2",
     "webpack-cli": "^4.6.0"
   },
   "watch": {

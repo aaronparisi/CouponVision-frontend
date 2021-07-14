@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Slider, Rail, Handles, Tracks, Ticks } from "react-compound-slider";
 import { SliderRail, Handle, Track, Tick } from "./components"; // example render components - source below
-import { startOfToday, format } from "date-fns";
+import { format } from "date-fns";
 import { scaleTime } from "d3-scale";
 
 const sliderStyle = {
@@ -13,19 +13,17 @@ function formatTick(ms) {
   return format(new Date(ms), "MMM yyyy");
 }
 
-const day = 1000 * 60 * 60 * 24;
-
 class DateSlider extends Component {
-  constructor({ minDate, maxDate, receiveDateRange }) {
+  constructor({ minDate, maxDate, mode, dateReceivedCallback, values, step }) {
     super();
 
-    const today = startOfToday();
-
     this.state = {
-      values: [minDate, today],
+      values: values,
       min: minDate,
       max: maxDate,
-      receiveDateRange: receiveDateRange
+      mode: mode,
+      step: step,
+      dateReceivedCallback: dateReceivedCallback
     };
   }
 
@@ -36,7 +34,7 @@ class DateSlider extends Component {
   onUpdate = values => {
     this.setState({ values })
 
-    this.state.receiveDateRange(values.map(val => new Date(val)))
+    this.state.dateReceivedCallback(values.map(val => new Date(val)))
   }
 
   renderDateTime(date, header) {
@@ -56,24 +54,26 @@ class DateSlider extends Component {
   }
 
   render() {
-    const { min, max, values } = this.state;
+    const { min, max, values, mode, step } = this.state;
 
     const dateTicks = scaleTime()
       .domain([min, max])
       .ticks(24)
       .map(d => +d);
-
+    // debugger
     return (
       <div className="date-slider-wrapper" style={{ width: "100%" }}>
         <div className="date-range-render">
-          <div style={{ fontSize: 24 }}>{format(values[0], "MMM yyyy")}</div>
-          <div style={{ fontSize: 24}}>--</div>
-          <div style={{ fontSize: 24 }}>{format(values[1], "MMM yyyy")}</div>
+          <div style={{ fontSize: 24 }}>
+            {
+              values.map(val => (mode === 1) ? format(val, "MMM dd yyyy") : format(val, "MMM yyyy")).join("--")
+            }
+          </div>
         </div>
         <div style={{ margin: "5%", height: 120, width: "90%" }}>
           <Slider
-            mode={2}
-            step={day}
+            mode={this.state.mode}
+            step={step}
             domain={[+min, +max]}
             rootStyle={sliderStyle}
             onUpdate={this.onUpdate}

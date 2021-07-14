@@ -11,12 +11,13 @@ const ActiveCouponsOverTimeWrapper = ({
   grocers,
   earlyDate,
   lateDate,
-  colors,
+  loading,
   getActiveCouponsOverTime,
-  loading
+  dateReceivedCallback
 }) => {
   const [zoomMode, setZoomMode] = useState(true)
 
+  const today = new Date()
   const minDate = subYears(startOfToday(), 4)
   const maxDate = addYears(startOfToday(), 4)
 
@@ -44,12 +45,18 @@ const ActiveCouponsOverTimeWrapper = ({
         earlyDate={earlyDate} 
         lateDate={lateDate} 
         minScaleDate={(zoomMode) ? earlyDate : minDate} 
-        maxScaleDate={(zoomMode) ? lateDate : maxDate} 
-        colors={colors}
+        maxScaleDate={(zoomMode) ? lateDate : maxDate}
         loading={loading}
       />
       <div className="data-buttons">
-        <DateSliderContainer minDate={minDate} maxDate={maxDate} />
+        <DateSliderContainer 
+          minDate={minDate} 
+          maxDate={maxDate}
+          mode={2}
+          dateReceivedCallback={dateReceivedCallback}
+          values={[minDate, today]}
+          step={1000 * 60 * 60 * 24 * 7} // week
+        />
         {/* <button
           onClick={e => generateNewData(e)}
         >
