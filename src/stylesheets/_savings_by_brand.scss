@@ -2,6 +2,11 @@
   .data-wrapper {
     border: 1px solid #aaaaaa;
 
+    & .legend-label {
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
   & .data-buttons {
     margin-top: 10%;

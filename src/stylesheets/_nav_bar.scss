@@ -3,7 +3,7 @@
 nav {
   margin-top: 10px;
   flex-basis: 5%;
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid #dddddd;
   
   .nav-links {
     display: flex;
@@ -15,7 +15,7 @@ nav {
       display: flex;
       align-items: center;
       &:hover {
-        background-color: #eeeeee;
+        background-color: #dddddd;
       }
       
       a {

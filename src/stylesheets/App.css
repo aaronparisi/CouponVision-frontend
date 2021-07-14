@@ -20,7 +20,7 @@ img {
 nav {
   margin-top: 10px;
   flex-basis: 5%;
-  border-bottom: 1px solid #eeeeee; }
+  border-bottom: 1px solid #dddddd; }
   nav .nav-links {
     display: flex;
     flex-direction: row;
@@ -30,7 +30,7 @@ nav {
       display: flex;
       align-items: center; }
       nav .nav-links .nav-link:hover {
-        background-color: #eeeeee; }
+        background-color: #dddddd; }
       nav .nav-links .nav-link a {
         padding: 10px;
         text-decoration: none;
@@ -133,6 +133,8 @@ nav {
 
 .savings-by-brand .data-wrapper {
   border: 1px solid #aaaaaa; }
+  .savings-by-brand .data-wrapper .legend-label:hover {
+    cursor: pointer; }
 .savings-by-brand .data-buttons {
   margin-top: 10%; }
   .savings-by-brand .data-buttons .date-slider-wrapper {
@@ -145,7 +147,8 @@ nav {
 #root, body, html {
   height: 100%;
   width: 100%;
-  font-family: 'Abel', sans-serif; }
+  font-family: 'Abel', sans-serif;
+  background-color: #eeeeee; }
 
 #root {
   display: flex;
