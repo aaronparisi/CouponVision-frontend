@@ -27,9 +27,6 @@ export const getSavingsByBrand = () => dispatch => {
   return apiUtil.getSavingsByBrand()
   .then(
     savingsByBrandData => {
-      /*
-      atodo display the shape of this data...
-      */
       if (savingsByBrandData.data !== '') {
         const dataWithColors = {
           brands: savingsByBrandData.data,
@@ -45,3 +42,52 @@ export const getSavingsByBrand = () => dispatch => {
     }
   )
 }
+
+/*
+{
+  name: "brands",
+  children: [
+    {
+      name: "Kraft",
+      children: [
+        {
+          name: "NY",
+          children: [
+            { ... coupon ...},
+            { ... coupon ...}, ...
+          ]
+        },
+        {
+          name: "WA",
+          children: [
+            { ... coupon ...},
+            { ... coupon ...}, ...
+          ]
+        },
+        ... more states ...
+      ]
+    },
+    {
+      name: "Kellog's",
+      children: [
+        {
+          name: "CA",
+          children: [
+            { ... coupon ...},
+            { ... coupon ...}, ...
+          ]
+        },
+        {
+          name: "FL",
+          children: [
+            { ... coupon ...},
+            { ... coupon ...}, ...
+          ]
+        },
+        ... more states ...
+      ]
+    },
+    ... more brands ...
+  ]
+}
+*/
