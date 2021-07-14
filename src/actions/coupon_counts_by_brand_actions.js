@@ -29,6 +29,15 @@ export const getCouponCountsByBrand = () => dispatch => {
       ]
       */
       if (couponCountsByBrandData.data !== '') {
+        // populate 'missing' brand keys
+        for (let i = 0; i < couponCountsByBrandData.data.grocers.length; i++) {  // iterate over all grocers
+          for (let j = 1; j <= 10; j++ ) {  // ensure all keys are present
+            if (!couponCountsByBrandData.data.grocers[i][j]) {
+              couponCountsByBrandData.data.grocers[i][j] = 0
+            }
+          }
+        }
+        
         const data = {
           grocers: couponCountsByBrandData.data.grocers,
           brands: couponCountsByBrandData.data.brands

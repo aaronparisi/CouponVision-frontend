@@ -20,6 +20,14 @@
   justify-content: stretch;
 }
 
+a {
+  color: black;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
 a:visited {
   color: black;
 }

@@ -78,7 +78,7 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys }) => {
     svg
       .select(".y-axis")
       .call(yAxis)
-
+    
     // stacks
     svg
       .selectAll(".layer")
@@ -102,7 +102,9 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys }) => {
       .data(layer => layer)
       .join("rect")
       .attr("x", sequence => xScale(sequence[0]))
-      .attr("width", sequence => xScale(sequence[1]) - xScale(sequence[0]))
+      .attr("width", sequence => {
+        return xScale(sequence[1]) - xScale(sequence[0])
+      })
       .attr("y", sequence => yScale(sequence.data.grocer_name))
       .attr("height", yScale.bandwidth())
       .on("mouseenter", (event, val) => {
