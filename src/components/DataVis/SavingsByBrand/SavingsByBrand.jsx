@@ -135,7 +135,7 @@ const SavingsByBrand = ({
       .text(child => {
         return child.data.name
       })
-      .attr("x", (val, i) => ((i+1) * (width / 5)) % width)
+      .attr("x", (val, i) => ((i+1) * (width / 5)) % width + 30)
       .attr("y", (val, i) => height + 25 + (Math.ceil((i+1) / 5)) * 30)
       .on("mouseenter", (e, child) => {
         setHoverColor(getColorFromName(child.data.name))
@@ -150,10 +150,11 @@ const SavingsByBrand = ({
             const tot = child.data.children.reduce((tot, coupon) => {
               return parseFloat(tot) + parseFloat(coupon.totalSavings)
             }, 0).toFixed(2)
-            return `Total Savings for ${child.data.name}:` + `$${tot}`
+            return `${child.data.name}: ` + `$${tot}`
           })
+          .attr("font-size", "20px")
           .attr("x", child => {
-            return child.x0 - (Math.max(0, child.x1 + 200 - width))
+            return child.x0 - (Math.max(0, (child.x1 + 150 - width))) / 2
           })
           .attr("y", child => {
             return child.y0 - 10
@@ -172,7 +173,7 @@ const SavingsByBrand = ({
       .data(Object.keys(brandColorIdxs))
       .join("rect")
       .attr("class", "legend-checkbox")
-      .attr("x", (val, i) => (((i+1) * (width / 5)) % width) - 30)
+      .attr("x", (val, i) => (((i+1) * (width / 5)) % width))
       .attr("y", (val, i) => height + 20 + (Math.ceil((i+1) / 5)) * 30 - 15)  // atodo abstract these
       .attr("height", 25)
       .attr("width", 25)

@@ -18,7 +18,7 @@ const App = props => {
 
   return (
     <React.Fragment >
-      <Link to="/" ><h1>👓 CouponVision 👓</h1></Link>
+      <Link to="/" ><h1 className="header">👓 CouponVision 👓</h1></Link>
         <Route path="/" component={NavBarContainer} />
         <Route exact path="/" component={Description} />
         <Route exact path="/curved-line" component={CurvedLineChartWrapper} />

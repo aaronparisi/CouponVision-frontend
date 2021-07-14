@@ -334,6 +334,7 @@ const CouponLineChart = ({
           De-Select All
         </button>
       </div>
+      <br />
       {loading
         ? <Loading />
         : <svg ref={svgRef}>

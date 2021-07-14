@@ -39,7 +39,7 @@ const ActiveCouponsOverTimeWrapper = ({
       >
         Zoom Mode: {(zoomMode) ? "On" : "Off"}
       </button>
-      <br />
+      
       <ActiveCouponsOverTime 
         grocers={grocers} 
         earlyDate={earlyDate} 

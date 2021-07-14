@@ -77,6 +77,7 @@ const CouponCountsByBrand = ({ grocers=[], brands=[], keys }) => {
     const yAxis = axisLeft(yScale)
     svg
       .select(".y-axis")
+      .attr("font-size", "14px")
       .call(yAxis)
     
     // stacks

@@ -19,7 +19,8 @@ img {
 
 nav {
   margin-top: 10px;
-  flex-basis: 5%; }
+  flex-basis: 5%;
+  border-bottom: 1px solid #eeeeee; }
   nav .nav-links {
     display: flex;
     flex-direction: row;
@@ -52,8 +53,7 @@ nav {
   justify-content: stretch;
   padding: 0px 50px;
   margin-top: 10px;
-  width: 100vw;
-  background-color: #eeeeee; }
+  width: 100vw; }
   .data-vis .tooltip {
     font-size: 20px;
     font-family: sans-serif; }
@@ -114,29 +114,38 @@ nav {
     font-size: 12px;
     font-family: sans-serif; }
 
+.active-over-time .data-wrapper .legend-buttons {
+  margin-left: 42%; }
 .active-over-time .data-buttons {
-  margin-top: 200px; }
+  margin-top: 20%; }
+  .active-over-time .data-buttons .date-slider-wrapper .date-range-render {
+    width: 100%;
+    margin-bottom: 2%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; }
+    .active-over-time .data-buttons .date-slider-wrapper .date-range-render div {
+      margin: 5px; }
 .active-over-time .loading {
   font-size: 100px; }
 .active-over-time [class*="data-point"]:hover, .active-over-time [class*="legend-label"]:hover, .active-over-time [class*="legend-checkbox"]:hover {
   cursor: pointer; }
 
-.date-range-render {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center; }
-  .date-range-render div {
-    margin: 5px; }
-
 .savings-by-brand .data-wrapper {
   border: 1px solid #aaaaaa; }
 .savings-by-brand .data-buttons {
-  margin-top: 200px; }
+  margin-top: 10%; }
+  .savings-by-brand .data-buttons .date-slider-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    .savings-by-brand .data-buttons .date-slider-wrapper .date-range-render {
+      margin-bottom: 5%; }
 
 #root, body, html {
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  font-family: 'Abel', sans-serif; }
 
 #root {
   display: flex;
@@ -145,12 +154,16 @@ nav {
   justify-content: stretch; }
 
 a {
-  color: black; }
+  color: black;
+  text-decoration: none; }
 
 a:hover {
   cursor: pointer; }
 
 a:visited {
   color: black; }
+
+.header {
+  margin-top: 5px; }
 
 /*# sourceMappingURL=App.css.map */

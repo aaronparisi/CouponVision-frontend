@@ -44,7 +44,7 @@ class DateSlider extends Component {
           width: "100%",
           textAlign: "center",
           fontFamily: "Arial",
-          margin: 5
+          margin: "0% 5%"
         }}
       >
         {/* <b>{header}:</b> */}
@@ -70,7 +70,7 @@ class DateSlider extends Component {
             }
           </div>
         </div>
-        <div style={{ margin: "5%", height: 120, width: "90%" }}>
+        <div style={{ margin: "0% 5%", height: 120, width: "90%" }}>
           <Slider
             mode={this.state.mode}
             step={step}
