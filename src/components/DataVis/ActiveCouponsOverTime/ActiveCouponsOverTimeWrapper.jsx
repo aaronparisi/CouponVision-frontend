@@ -33,7 +33,7 @@ const ActiveCouponsOverTimeWrapper = ({
   
   return (
     <div className="active-over-time data-vis">
-      <h1>Non-Expired Coupons Over Time</h1>
+      <h1>Active Coupons Over Time</h1>
       <button
         onClick={e => setZoomMode(!zoomMode)}
       >

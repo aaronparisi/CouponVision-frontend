@@ -20,3 +20,10 @@ export const getSavingsByBrand = () => {
     url: '/api/savings_by_brand',
   })
 }
+
+export const getSavingsTiersByBrand = () => {
+  return axiosIns({
+    method: 'get',
+    url: '/api/savings_tiers_by_brand',
+  })
+}

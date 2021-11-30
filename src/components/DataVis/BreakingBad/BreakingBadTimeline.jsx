@@ -23,7 +23,6 @@ const BreakingBadTimeline = ({ episodes, selectedCharacters }) => {
   const wrapperContentRect = useResizeObserver(wrapperRef)
 
   useEffect(() => {
-    console.log(JSON.stringify(selectedCharacters))
     const hasCharacters = characters => {
       // given an array of characters, representing the characters
       // in a particular episode,

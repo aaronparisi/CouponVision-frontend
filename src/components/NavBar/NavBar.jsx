@@ -3,10 +3,7 @@ import { Link } from 'react-router-dom'
 
 const NavBar = props => {
   const loc = props.location.pathname
-  const linkStyle = {
-    TextDecoration: (cur => (cur === loc) ? "underline" : "none")
-  }
-
+  
   return (
     <nav>
       <ul className="nav-links">
@@ -30,6 +27,9 @@ const NavBar = props => {
         </li>
         <li className="nav-link" id={ new RegExp(/savings-by-brand/).test(props.location.pathname) ? "selected-nav-link" : ""}>
           <Link to="/savings-by-brand">Savings By Brand</Link>
+        </li>
+        <li className="nav-link" id={ new RegExp(/savings-tiers-by-brand/).test(props.location.pathname) ? "selected-nav-link" : ""}>
+          <Link to="/savings-tiers-by-brand">Savings Tiers By Brand</Link>
         </li>
         {/* <li className="nav-link" id={ new RegExp(/).test(props.location.pathname) ? "selected-nav-link" : ""}>
           <Link to="/circles">Circles</Link>
